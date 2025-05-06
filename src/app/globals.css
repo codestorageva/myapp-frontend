@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+@font-face {
+  font-family: 'Inria Serif';
+  src: url('/assets/fonts/InriaSerif-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/assets//fonts/Inter_18pt-Regular.ttf') format('truetype');
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: 'Inria Serif';
+}
+
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
+}
+
+input[type="password"]::-webkit-credentials-auto-fill-button,
+input[type="password"]::-webkit-contacts-auto-fill-button {
+  display: none !important;
+}
