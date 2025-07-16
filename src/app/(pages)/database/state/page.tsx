@@ -118,12 +118,10 @@ const StateScreen = () => {
         }
     }
 
-    return (
-        <Layout>
-            <div className="relative w-full h-full">
+    return ( <div className="relative w-full h-full  p-5">
                 <div className='relative flex flex-col w-full h-full'>
                     <h1 className="text-3xl font-bold text-center text-black mb-10">State Details</h1>
-                    <div className="flex items-center justify-between space-x-3">
+                    <div className="flex items-center justify-between space-x-3 text-black">
                         <div className='py-3 relative'>
                             <input
                                 type="text"
@@ -153,7 +151,7 @@ const StateScreen = () => {
                     <div>
                         {isLoading ? (
                             <div className="flex-grow">
-                                <div className="absolute inset-0 flex justify-center items-center">
+                                <div className=" inset-0 flex justify-center items-center">
                                     <Loader isInside={true} />
                                 </div>
                             </div>
@@ -193,7 +191,7 @@ const StateScreen = () => {
                     />
                 </div>
             </div>
-        </Layout>
+      
     )
 }
 

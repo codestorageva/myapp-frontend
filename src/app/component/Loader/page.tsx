@@ -1,6 +1,10 @@
 import React from 'react'
-import Lottie from "react-lottie-player";
-import Loading from '../../../../public/assets/images/loader/Animation - 1745566403338.json'
+
+import dynamic from 'next/dynamic';
+
+const Lottie = dynamic(() => import('react-lottie-player'), { ssr: false });
+// import Loading from '../../../../public/assets/images/loader/Animation - 1745566403338.json'
+import Loading from '../../../../public/assets/images/loader/loading.json'
 import loaderStyle from "./loader.module.scss";
 
 const Loader = ({ isInside }: { isInside?: boolean }) => {
@@ -8,7 +12,7 @@ const Loader = ({ isInside }: { isInside?: boolean }) => {
         <>
             {isInside ? (
                 <div className='d-flex justify-content-center align-items-center'
-                    style={{ scale: 0.2 }}
+                    style={{ scale: 0.3 }}
                 >
                     <Lottie
                         loop
@@ -19,7 +23,7 @@ const Loader = ({ isInside }: { isInside?: boolean }) => {
                 </div>
             ) : (
                 <div className="fixed inset-0 flex justify-center items-center bg-white/50 z-50">
-                    <div className='justify-conten-center align-items-center' style={{ scale: 0.2 }}>
+                    <div className='justify-conten-center align-items-center' style={{ scale: 0.3 }}>
                         <Lottie loop animationData={Loading} play />
                     </div>
                 </div>

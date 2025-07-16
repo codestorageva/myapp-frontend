@@ -17,7 +17,7 @@ import { getCompanyById } from '../dashboard-page/dashboard';
 
 const CompanyRegistration = () => {
     const router = useRouter()
-    const [regDetails, setRegDetails] = useState({ companyName: '', ownerName: '', logo: null, addressLine1: '', addressLine2: '', addressLine3: '', state1: '', city1: '', pincode1: '', shippingAddressLine1: '', shippingAddressLine2: '', shippingAddressLine3: '', shippingState: '', shippingCity: '', shippingPincode: '', panNo: '', gstNo: '', serviceDes: '', accountHolderName: '', bankName: '', branchName: '', accountNo: '', IFSC: '', bankAddress: '', industry: '' })
+    const [regDetails, setRegDetails] = useState({ companyName: '', ownerName: '',phoneNo:'', logo: null, addressLine1: '', addressLine2: '', addressLine3: '', state1: '', city1: '', pincode1: '', shippingAddressLine1: '', shippingAddressLine2: '', shippingAddressLine3: '', shippingState: '', shippingCity: '', shippingPincode: '', panNo: '', gstNo: '', serviceDes: '', accountHolderName: '', bankName: '', branchName: '', accountNo: '', IFSC: '', bankAddress: '', industry: '', password: ''})
     const steps = [
         { id: 1, label: "Your Profile", active: true },
         { id: 2, label: "Auto Generate VID", active: false },
@@ -49,6 +49,7 @@ const CompanyRegistration = () => {
         accountNo: Yup.string().required('Account Number is required'),
         IFSC: Yup.string().required('IFSC Code is required'),
         bankAddress: Yup.string().required('Bank Address is required'),
+        password: Yup.string().required('Password is required'),
         logo: Yup.mixed()
             .nullable() // ✅ allow null when editing
             .when([], {
@@ -104,6 +105,8 @@ const CompanyRegistration = () => {
                 shippingCityId: values.shippingCity,
                 shippingPincode: values.shippingPincode,
                 shippingStateId: values.shippingState,
+                password: values.password,
+                mobileNumber: values.phoneNo
             }
             let res = await companyReg(values.logo, req);
             setIsLoading(false);
@@ -163,6 +166,8 @@ const CompanyRegistration = () => {
                 shippingCityId: values.shippingCity,
                 shippingPincode: values.shippingPincode,
                 shippingStateId: values.shippingState,
+                password: values.password,
+                mobileNumber: values.phoneNo
             }
             let res = await companyUpdate(values.logo ?? null, req, id);
             setIsLoading(false);
@@ -223,6 +228,7 @@ const CompanyRegistration = () => {
                     IFSC: res.data.bankDetails[0].ifscCode,
                     bankAddress: res.data.bankDetails[0].bankAddress,
                     industry: res.data.industry,
+                    password: res.data.password
                 };
                 setRegDetails(companyDetails);
                 setCompanyLogo(res.data.logo);
@@ -288,8 +294,8 @@ const CompanyRegistration = () => {
                 <div className="absolute inset-0 bg-black/40 z-0" />
             </div>
             {isLoading && <Loader />}
-            <Layout showSidebar={false}>
-                <div className='relative flex flex-col w-full h-full'>
+            <Layout showSidebar={false} transparentBg>
+                <div className='relative flex flex-col w-full h-full p-5'>
                     <div className='w-full flex flex-col h-screen items-center'>
                         <h1 className="text-3xl font-bold text-center text-white mb-10">{id !== '' ? 'Update Organization' : 'Organization Registration'}</h1>
                         <div className="w-full flex justify-center">
@@ -298,12 +304,14 @@ const CompanyRegistration = () => {
                                 validationSchema={validationSchema}
                                 onSubmit={id !== '' ? onUpdate : onSubmit}
                                 enableReinitialize
+                                validateOnChange={false}
+                                validateOnBlur={false}
                             >
-                                {({ values, handleChange, handleBlur, handleSubmit, setFieldValue }) => (
+                                {({ values, handleChange, handleBlur, handleSubmit, setFieldValue, setFieldTouched, touched }) => (
                                     <Form className="w-[90%]">
                                         <div className='border rounded-md items-start bg-white p-5 mb-5'>
                                             <h1 className="text-2xl font-bold text-cente mb-3">Personal Details</h1>
-                                            <PersonalDetails values={values} handleChange={handleChange} handleBlur={handleBlur} industries={industries} setFieldValue={setFieldValue} companyLogo={companyLogo} />
+                                            <PersonalDetails values={values} handleChange={handleChange} handleBlur={handleBlur} industries={industries} setFieldValue={setFieldValue} companyLogo={companyLogo} setFieldTouched={setFieldTouched}/>
                                         </div>
                                         <div className='border rounded-md items-start bg-white p-5 mb-5'>
                                             <h1 className="text-2xl font-bold text-cente mb-3">Address Details</h1>

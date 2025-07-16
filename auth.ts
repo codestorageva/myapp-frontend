@@ -1,6 +1,8 @@
 import CredentialsProvider from "next-auth/providers/credentials";
   import  type {NextAuthConfig}  from "next-auth";
 import NextAuth from "next-auth";
+import { SERVER_URL } from "@/core/constants";
+import { API_ENDPOINTS } from "@/core/constants/api_endpoint";
 
 interface Credentials {
   email: string;
@@ -9,7 +11,8 @@ interface Credentials {
 
 async function login(credentials:Credentials) {
   try {
-    const response = await fetch("http://192.168.1.104:8083/auth/login", {
+    // const response = await fetch("http://192.168.1.104:8084/auth/login", {
+     const response = await fetch(`${SERVER_URL}${API_ENDPOINTS.login}`, {
       method: "POST",
       body: JSON.stringify({
         email: credentials.email,
@@ -19,6 +22,7 @@ async function login(credentials:Credentials) {
     });
     
     const data = await response.json();
+    console.log("API login response: 👈", data); 
     if (data.success) {
       return data;
     } else {

@@ -44,7 +44,7 @@ const Customer = () => {
   const router = useRouter()
   const states = ['Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh', 'Goa', 'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jharkhand', 'Karnataka', 'Kerala', 'Madhya Pradesh']
   const cities = ['Ahmedabad', 'Surat', 'Baroda', 'Rajkot', 'Bhavnagar', 'Jamnagar', 'Junagadh', 'Gandhinagar', 'Porbandar', 'Morbi', 'Nadiad', 'Bharuch', 'Vapi', 'Ankleshwar', 'Patan', 'Mehsana', 'Bhuj', 'Palanpur', 'Veraval', 'Surendranagar']
-  const [customerReg, setRegDetails] = useState({ companyId: '', salutation: '', firstName: '', lastName: '', companyName: '', displayName: '', email: '', workPhone: '', mobileNo: '', pan: '', gstNo: '', billingAttention: '', billingAddressLine1: '', billingAddressLine2: '', billingCity: '', billingState: '', billingPincode: '', shippingAttention: '', shippingAddressLine1: '', shippingAddressLine2: '', shippingCity: '', shippingState: '', shippingPincode: '',placeOfSupply:'' })
+  const [customerReg, setRegDetails] = useState({ companyId: '', salutation: '', firstName: '', lastName: '', companyName: '',vid:'',  displayName: '', email: '', workPhone: '', mobileNo: '', pan: '', gstNo: '', billingAttention: '', billingAddressLine1: '', billingAddressLine2: '', billingCity: '', billingState: '', billingPincode: '', shippingAttention: '', shippingAddressLine1: '', shippingAddressLine2: '', shippingCity: '', shippingState: '', shippingPincode: '', placeOfSupply: '', terms: ''})
 
   const [sameAsBilling, setSameAsBilling] = useState(false)
 
@@ -174,7 +174,9 @@ const Customer = () => {
           shippingPincode: res.data.shippingPincode,
           shippingState: res.data.shippingStateId.toString(),
           workPhone: res.data.workPhone,
-          placeOfSupply: res.data.placeOfSupplyStateId
+          placeOfSupply: res.data.placeOfSupplyStateId,
+          vid: res.data.vid,
+          terms: res.data.terms
         })
         if (Array.isArray(res.data?.contactPersons)) {
           console.log("Contact Person Data : ", res.data.contactPersons.length);
@@ -312,7 +314,9 @@ const Customer = () => {
         shippingPincode: values.shippingPincode,
         shippingStateId: parseInt(values.shippingState),
         workPhone: values.workPhone,
-        placeOfSupplyStateId: values.placeOfSupply
+        placeOfSupplyStateId: values.placeOfSupply,
+        vid: values.vid,
+        terms: values.terms
       };
 
       console.log("Request ====>", request);
@@ -366,7 +370,9 @@ const Customer = () => {
         shippingPincode: values.shippingPincode,
         shippingStateId: parseInt(values.shippingState),
         workPhone: values.workPhone,
-        placeOfSupplyStateId: values.placeOfSupply
+        placeOfSupplyStateId: values.placeOfSupply,
+        vid: values.vid,
+        terms: values.terms
       };
 
       console.log("Request ====>", request);
@@ -389,11 +395,10 @@ const Customer = () => {
 
 
   return (
-    <Layout>
-      <div className='w-full flex flex-col items-center'>
+      <div className='w-full flex flex-col items-center p-5'>
         <h1 className='text-3xl font-bold text-center text-black mb-10'>{id !== '' ? 'Update Customer' : 'Customer Registration'}</h1>
 
-        <div className='w-[95%] border rounded-md bg-white p-5'>
+        <div className='w-[95%] border rounded-md bg-white p-5 text-black'>
 
           {/* Row 1: Customer Type */}
           <div className='grid grid-cols-1 md:grid-cols-4 gap-4 mb-3'>
@@ -409,6 +414,7 @@ const Customer = () => {
                     value="Business"
                     checked={customerType === 'Business'}
                     onChange={(e) => setType(e.target.value)}
+                    className='accent-red-600'
                   />
                   Business
                 </label>
@@ -419,6 +425,7 @@ const Customer = () => {
                     value="Individual"
                     checked={customerType === 'Individual'}
                     onChange={(e) => setType(e.target.value)}
+                    className='accent-red-600'
                   />
                   Individual
                 </label>
@@ -435,8 +442,8 @@ const Customer = () => {
               <Form>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-3">
                   <div className='col-span-1'>
-                    <CustomLabel title="Salutation" isCompulsory={true}/>
-                    <select className="w-full border rounded-md px-3 py-2 text-sm font-inter" name='salutation' onChange={(e) => setFieldValue('salutation', e.target.value)}>
+                    <CustomLabel title="Salutation" isCompulsory={true} />
+                    <select className="w-full border bg-white focus:ring-1 focus:ring-red-300 rounded-md px-2 py-2 text-sm font-inter" name='salutation' onChange={(e) => setFieldValue('salutation', e.target.value)}>
                       <option value="">Select</option>
                       <option value="Mr.">Mr.</option>
                       <option value="Mrs.">Mrs.</option>
@@ -447,12 +454,12 @@ const Customer = () => {
                   </div>
 
                   <div className='col-span-1'>
-                    <TextField label='First Name' name='firstName' value={values.firstName} onChange={handleChange} isCompulsory={true}/>
+                    <TextField label='First Name' name='firstName' value={values.firstName} onChange={handleChange} isCompulsory={true} className='text-sm'/>
                     <ErrorMessage name="firstName" component="div" className="text-red-600 text-sm mt-1" />
                   </div>
 
                   <div className='col-span-1'>
-                    <TextField label='Last Name' name='lastName' value={values.lastName} onChange={handleChange} isCompulsory={true}/>
+                    <TextField label='Last Name' name='lastName' value={values.lastName} onChange={handleChange} isCompulsory={true} />
                     <ErrorMessage name="lastName" component="div" className="text-red-600 text-sm mt-1" />
                   </div>
                 </div>
@@ -461,31 +468,35 @@ const Customer = () => {
                     <TextField label='Company Name' name='companyName' value={customerReg.companyName} onChange={(e) => setRegDetails({ ...customerReg, companyName: e.target.value })} disabled={true} />
                   </div>
                   <div className='col-span-1 md:col-span-1'>
-                    <TextField label='Display Name' name='displayName' value={values.displayName} onChange={handleChange} isCompulsory={true}/>
-                    <ErrorMessage name="displayName" component="div" className="text-red-600 text-sm mt-1" /> 
+                    <TextField label='VID' name='vid' value={values.vid} onChange={handleChange} isCompulsory/>
+                    <ErrorMessage name="vid" component="div" className="text-red-600 text-sm mt-1" />
                   </div>
                   <div className='col-span-1 md:col-span-1'>
-                    <TextField label='Email' name='email' value={values.email} onChange={handleChange} isCompulsory={true}/>
+                    <TextField label='Display Name' name='displayName' value={values.displayName} onChange={handleChange} isCompulsory={true} />
+                    <ErrorMessage name="displayName" component="div" className="text-red-600 text-sm mt-1" />
+                  </div>
+                  <div className='col-span-1 md:col-span-1'>
+                    <TextField label='Email' name='email' value={values.email} onChange={handleChange} isCompulsory={true} />
                     <ErrorMessage name="email" component="div" className="text-red-600 text-sm mt-1" />
                   </div>
                   <div className='col-span-1 md:col-span-1'>
-                    <TextField label='Work Phone' name='workPhone' value={values.workPhone} onChange={handleChange} isCompulsory={true}/>
+                    <TextField label='Work Phone' name='workPhone' value={values.workPhone} onChange={handleChange} isCompulsory={true} />
                     <ErrorMessage name="workPhone" component="div" className="text-red-600 text-sm mt-1" />
                   </div>
                   <div className='col-span-1 md:col-span-1'>
-                    <TextField label='Mobile Number' name='mobileNo' value={values.mobileNo} onChange={handleChange} isCompulsory={true}/>
+                    <TextField label='Mobile Number' name='mobileNo' value={values.mobileNo} onChange={handleChange} isCompulsory={true} type='number' />
                     <ErrorMessage name="mobileNo" component="div" className="text-red-600 text-sm mt-1" />
                   </div>
                   <div className='col-span-1 md:col-span-1'>
-                    <TextField label='PAN' name='pan' value={values.pan} onChange={handleChange} isCompulsory={true}/>
+                    <TextField label='PAN' name='pan' value={values.pan} onChange={handleChange} isCompulsory={true} />
                     <ErrorMessage name="pan" component="div" className="text-red-600 text-sm mt-1" />
                   </div>
                   <div className='col-span-1 md:col-span-1'>
-                    <TextField label='GST No.' name='gstNo' value={values.gstNo} onChange={handleChange} isCompulsory={true}/>
+                    <TextField label='GST No.' name='gstNo' value={values.gstNo} onChange={handleChange} isCompulsory={true} />
                     <ErrorMessage name="gstNo" component="div" className="text-red-600 text-sm mt-1" />
                   </div>
                   <div className="sm:col-span-1">
-                    <CustomLabel title='Place of Supply' isCompulsory={true}/>
+                    <CustomLabel title='Place of Supply' isCompulsory={true} />
                     <div className="relative w-full mt-1">
                       <StateDropDown
                         name='placeOfSupply'
@@ -530,7 +541,7 @@ const Customer = () => {
                               <select
                                 value={contact.salutation}
                                 onChange={(e) => updateContact(index, 'salutation', e.target.value)}
-                                className="w-full border border-gray-300 rounded px-2 py-1"
+                                className="w-full border bg-white focus:outline-none focus:ring-1 focus:ring-red-300 border-gray-300 rounded px-2 py-1"
                               >
                                 <option value="">Select</option>
                                 <option value="Mr.">Mr.</option>
@@ -540,31 +551,31 @@ const Customer = () => {
                               </select>
                             </td>
                             <td className="px-3 py-2">
-                              <input type="text" className="w-full border border-gray-300 rounded px-2 py-1"
+                              <input type="text" className="w-full bg-white focus:ring-1 focus:ring-red-300 border border-gray-300 rounded px-2 py-1"
                                 value={contact.firstName}
                                 onChange={(e) => updateContact(index, 'firstName', e.target.value)}
                               />
                             </td>
                             <td className="px-3 py-2">
-                              <input type="text" className="w-full border border-gray-300 rounded px-2 py-1"
+                              <input type="text" className="w-full bg-white focus:ring-1 focus:ring-red-300 border border-gray-300 rounded px-2 py-1"
                                 value={contact.lastName}
                                 onChange={(e) => updateContact(index, 'lastName', e.target.value)}
                               />
                             </td>
                             <td className="px-3 py-2">
-                              <input type="email" className="w-full border border-gray-300 rounded px-2 py-1"
+                              <input type="email" className="w-full bg-white focus:ring-1 focus:ring-red-300 border border-gray-300 rounded px-2 py-1"
                                 value={contact.email}
                                 onChange={(e) => updateContact(index, 'email', e.target.value)}
                               />
                             </td>
                             <td className="px-3 py-2">
-                              <input type="text" className="w-full border border-gray-300 rounded px-2 py-1"
+                              <input type="text" className="w-full border bg-white focus:ring-1 focus:ring-red-300 border-gray-300 rounded px-2 py-1"
                                 value={contact.workPhone}
                                 onChange={(e) => updateContact(index, 'workPhone', e.target.value)}
                               />
                             </td>
                             <td className="px-3 py-2">
-                              <input type="text" className="w-full border border-gray-300 rounded px-2 py-1"
+                              <input type="text" className="w-full border bg-white focus:ring-1 focus:ring-red-300 border-gray-300 rounded px-2 py-1"
                                 value={contact.mobileNumber}
                                 onChange={(e) => updateContact(index, 'mobileNumber', e.target.value)}
                               />
@@ -580,7 +591,7 @@ const Customer = () => {
 
                   <button
                     onClick={addContact}
-                    className="mt-4 flex items-center gap-2 px-4 py-2 text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-md text-sm"
+                    className="mt-4 flex items-center gap-2 px-4 py-2 text-red-600 bg-red-50 hover:bg-blue-100 rounded-md text-sm"
                   >
                     Add Contact Person
                   </button>
@@ -591,24 +602,24 @@ const Customer = () => {
                   <h1 className='underline text-sm'>Billing Address</h1>
                   <div className='mt-2 grid grid-cols-1 md:grid-cols-3 gap-3'>
                     <div className="sm:col-span-1">
-                      <TextField label='Attention' name='billingAttention' value={values.billingAttention} onChange={handleChange} isCompulsory={true}/>
+                      <TextField label='Attention' name='billingAttention' value={values.billingAttention} onChange={handleChange} isCompulsory={true} />
                       <ErrorMessage name="billingAttention" component="div" className="text-red-600 text-sm mt-1" />
                     </div>
                     <div className="sm:col-span-1">
-                      <CustomLabel title='Address Line 1' isCompulsory={true}/>
+                      <CustomLabel title='Address Line 1' isCompulsory={true} />
                       <div className="mt-1">
-                        <input type="address" name="billingAddressLine1" autoComplete="given-name" value={values.billingAddressLine1} onChange={handleChange} className="block w-full font-inter rounded-md border focus:outline-none border-gray-300 py-1 px-2 text-gray-900 focus:border-blue-500 focus:border-[2px] placeholder:text-gray-400 sm:text-sm sm:leading-6" />
+                        <input type="address" name="billingAddressLine1" autoComplete="given-name" value={values.billingAddressLine1} onChange={handleChange} className="block bg-white w-full focus:ring-1 focus:ring-red-300 font-inter rounded-md border focus:outline-none border-gray-300 py-1 px-2 text-gray-900 focus:border-blue-500 focus:border-[2px] placeholder:text-gray-400 sm:text-sm sm:leading-6" />
                         <ErrorMessage name="billingAddressLine1" component="div" className="text-red-600 text-sm mt-1" />
                       </div>
                     </div>
                     <div className="sm:col-span-1">
-                      <CustomLabel title='Address Line 2'/>
+                      <CustomLabel title='Address Line 2' />
                       <div className="mt-1">
-                        <input type="address" name='billingAddressLine2' autoComplete="given-name" value={values.billingAddressLine2} onChange={handleChange} className="block w-full font-inter rounded-md border focus:outline-none border-gray-300 py-1 px-2 text-gray-900 focus:border-blue-500 focus:border-[2px] placeholder:text-gray-400 sm:text-sm sm:leading-6" />
+                        <input type="address" name='billingAddressLine2' autoComplete="given-name" value={values.billingAddressLine2} onChange={handleChange} className="block bg-white w-full focus:ring-1 focus:ring-red-300 font-inter rounded-md border focus:outline-none border-gray-300 py-1 px-2 text-gray-900 focus:border-blue-500 focus:border-[2px] placeholder:text-gray-400 sm:text-sm sm:leading-6" />
                       </div>
                     </div>
                     <div className="sm:col-span-1">
-                      <CustomLabel title='State' isCompulsory={true}/>
+                      <CustomLabel title='State' isCompulsory={true} />
                       <div className="relative w-full mt-1">
                         <StateDropDown
                           name='billingState'
@@ -635,7 +646,7 @@ const Customer = () => {
                       </div>
                     </div>
                     <div className="sm:col-span-1">
-                      <CustomLabel title='City' isCompulsory={true}/>
+                      <CustomLabel title='City' isCompulsory={true} />
                       <div className="relative w-full mt-1">
                         <CityDropDown
                           stateId={values.billingState}
@@ -655,9 +666,9 @@ const Customer = () => {
                     </div>
 
                     <div className="sm:col-span-1">
-                      <CustomLabel title='Pincode' isCompulsory={true}/>
+                      <CustomLabel title='Pincode' isCompulsory={true} />
                       <div className="mt-1">
-                        <input type="number" name='billingPincode' autoComplete="given-name" value={values.billingPincode} onChange={handleChange} className="block w-full font-inter rounded-md border focus:outline-none border-gray-300 py-1 px-2 text-gray-900 focus:border-blue-500 focus:border-[2px] placeholder:text-gray-400 sm:text-sm sm:leading-6" />
+                        <input type="number" name='billingPincode' autoComplete="given-name" value={values.billingPincode} onChange={handleChange} className="block w-full font-inter rounded-md border focus:outline-none focus:ring-1 focus:ring-red-300 bg-white border-gray-300 py-1 px-2 text-gray-900 focus:border-blue-500 focus:border-[2px] placeholder:text-gray-400 sm:text-sm sm:leading-6" />
                         <ErrorMessage name="billingPincode" component="div" className="text-red-600 text-sm" />
                       </div>
                     </div>
@@ -666,22 +677,22 @@ const Customer = () => {
                   {/* Shipping Address */}
                   <h1 className='underline text-sm mt-4'>Shipping Address</h1>
                   <div className="mt-2 mb-3 flex items-center gap-2">
-                    <input type="checkbox" id="sameAsBilling" checked={sameAsBilling} onChange={(e) => handleCheckboxChange(e, setFieldValue, values)} />
+                    <input type="checkbox" id="sameAsBilling" checked={sameAsBilling} className="w-3 h-3 accent-red-600"  onChange={(e) => handleCheckboxChange(e, setFieldValue, values)} />
                     <label htmlFor="sameAsBilling" className="font-inter text-sm text-gray-700">Same as Billing Address</label>
                   </div>
-                  <div className='mt-3 grid grid-cols-3 gap-x-4 gap-y-2'>
+                  <div className='mt-2 grid grid-cols-1 md:grid-cols-3 gap-3'>
                     <div className="sm:col-span-1">
-                      <CustomLabel title='Attention' isCompulsory={true}/>
+                      <CustomLabel title='Attention' isCompulsory={true} />
                       <div className="mt-1">
-                        <input type="text" name="shippingAttention" autoComplete="given-name" value={values.shippingAttention} onChange={handleChange} className="block w-full font-inter rounded-md border focus:outline-none border-gray-300 py-1 px-2 text-gray-900 focus:border-blue-500 focus:border-[2px] placeholder:text-gray-400 sm:text-sm sm:leading-6" />
+                        <input type="text" name="shippingAttention" autoComplete="given-name" value={values.shippingAttention} onChange={handleChange} className="block w-full font-inter rounded-md border focus:outline-none bg-white focus:ring-1 focus:ring-red-300 border-gray-300 py-1 px-2 text-gray-900 focus:border-blue-500 focus:border-[2px] placeholder:text-gray-400 sm:text-sm sm:leading-6" />
                       </div>
                       <ErrorMessage name="shippingAttention" component="div" className="text-red-600 text-sm" />
 
                     </div>
                     <div className="sm:col-span-1">
-                      <CustomLabel title='Address Line 1' isCompulsory={true}/>
+                      <CustomLabel title='Address Line 1' isCompulsory={true} />
                       <div className="mt-1">
-                        <input type="address" name='shippingAddressLine1' autoComplete="given-name" value={values.shippingAddressLine1} onChange={handleChange} className="block w-full font-inter rounded-md border focus:outline-none border-gray-300 py-1 px-2 text-gray-900 focus:border-blue-500 focus:border-[2px] placeholder:text-gray-400 sm:text-sm sm:leading-6" />
+                        <input type="address" name='shippingAddressLine1' autoComplete="given-name" value={values.shippingAddressLine1} onChange={handleChange} className="block w-full font-inter rounded-md border focus:outline-none focus:ring-1 focus:ring-red-300 bg-white border-gray-300 py-1 px-2 text-gray-900 focus:border-blue-500 focus:border-[2px] placeholder:text-gray-400 sm:text-sm sm:leading-6" />
                         <ErrorMessage name="shippingAddressLine1" component="div" className="text-red-600 text-sm" />
 
                       </div>
@@ -689,11 +700,11 @@ const Customer = () => {
                     <div className="sm:col-span-1">
                       <CustomLabel title='Address Line 2' />
                       <div className="mt-1">
-                        <input type="address" name='shippingAddressLine2' autoComplete="given-name" value={values.shippingAddressLine2} onChange={handleChange} className="block w-full font-inter rounded-md border focus:outline-none border-gray-300 py-1 px-2 text-gray-900 focus:border-blue-500 focus:border-[2px] placeholder:text-gray-400 sm:text-sm sm:leading-6" />
+                        <input type="address" name='shippingAddressLine2' autoComplete="given-name" value={values.shippingAddressLine2} onChange={handleChange} className="block w-full font-inter rounded-md border focus:outline-none bg-white focus:ring-1 focus:ring-red-300 border-gray-300 py-1 px-2 text-gray-900 focus:border-blue-500 focus:border-[2px] placeholder:text-gray-400 sm:text-sm sm:leading-6" />
                       </div>
                     </div>
                     <div className="sm:col-span-1">
-                      <CustomLabel title='State' isCompulsory={true}/>
+                      <CustomLabel title='State' isCompulsory={true} />
                       <div className="relative w-full mt-1">
                         <StateDropDown
                           name='shippingState'
@@ -738,11 +749,18 @@ const Customer = () => {
                     </div>
 
                     <div className="sm:col-span-1">
-                      <CustomLabel title='Pincode' isCompulsory={true}/>
+                      <CustomLabel title='Pincode' isCompulsory={true} />
                       <div className="mt-1">
-                        <input type="number" name='shippingPincode' autoComplete="given-name" value={values.shippingPincode} onChange={handleChange} className="block w-full font-inter rounded-md border focus:outline-none border-gray-300 py-1 px-2 text-gray-900 focus:border-blue-500 focus:border-[2px] placeholder:text-gray-400 sm:text-sm sm:leading-6" />
+                        <input type="number" name='shippingPincode' autoComplete="given-name" value={values.shippingPincode} onChange={handleChange} className="block w-full font-inter rounded-md border focus:outline-none border-gray-300 py-1 px-2 text-gray-900 focus:ring-1 focus:ring-red-300 bg-white focus:border-[2px] placeholder:text-gray-400 sm:text-sm sm:leading-6" />
                         <ErrorMessage name="shippingPincode" component="div" className="text-red-600 text-sm" />
                       </div>
+                    </div>
+                  </div>
+                  <div className="sm:col-span-1 mt-3">
+                    <CustomLabel title='Terms' isCompulsory={true} />
+                    <div className="mt-1">
+                      <input type="multiline" name='terms' autoComplete="given-name" value={values.terms} onChange={handleChange} className="block w-full font-inter rounded-md border focus:outline-none border-gray-300 py-1 px-2 text-gray-900 bg-white focus:ring-1 focus:ring-red-300 focus:border-[2px] placeholder:text-gray-400 sm:text-sm sm:leading-6" />
+                      <ErrorMessage name="shippingPincode" component="div" className="text-red-600 text-sm" />
                     </div>
                   </div>
                   <div className="w-full flex items-center justify-center gap-5 pt-5">
@@ -793,7 +811,7 @@ const Customer = () => {
 
         </div>
       </div>
-    </Layout>
+   
   )
 }
 

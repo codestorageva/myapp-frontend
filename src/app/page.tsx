@@ -1,8 +1,8 @@
 'use client'
 import Image from "next/image";
-import Login from "../(auth)/login/page";
+import Login from "./(auth)/login/page";
 import { useSession } from "next-auth/react";
-import MainDashboard from "./main-dashboard/page";
+import MainDashboard from "./organization/main-dashboard/page";
 
 export default function Home() {
   const { status } = useSession();

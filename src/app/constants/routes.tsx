@@ -11,5 +11,14 @@ export const ROUTES = {
     restore_customer: '/customer/restore/',
     view_customer: '/customer/view/',
 
-    view_invoice: '/generate-invoice/view-invoice'
+    view_invoice: '/invoice/view-invoice',
+
+
+    add_vendor: '/purchase/vendor/add',
+    restore_vendor:'/purchase/vendor/restore',
+    view_vendor_details:'/purchase/vendor/view',
+
+    add_bill: '/purchase/bills/bill',
+    view_bill: '/purchase/bills/view',
+    bill_payment: '/purchase/vendor/bill_payment'
 }

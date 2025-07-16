@@ -47,7 +47,7 @@ const CityAddUpdate = () => {
         } catch (error) {
             toast.error("Failed to fetch city data");
         } finally {
-       
+
         }
     }
 
@@ -116,26 +116,25 @@ const CityAddUpdate = () => {
     }
 
     return (
-        <Layout>
-            <div className='w-full flex flex-col items-center'>
-                {isLoading && (
-                    <div className="fixed top-0 left-0 w-full h-full bg-white/50 flex items-center justify-center z-50">
-                        <Loader isInside={true} />
-                    </div>
-                )}
-                <h1 className="text-3xl font-bold text-center text-black mb-10 mt-10">{id !== '' ? 'Edit' : 'Add New'} City</h1>
-                <div className='min-w-[25%] border rounded-md bg-white p-5 mb-5 space-y-4'>
+        <div className='w-full flex flex-col items-center  p-5'>
+            {isLoading && (
+                <div className="fixed top-0 left-0 w-full h-full bg-white/50 flex items-center justify-center z-50">
+                    <Loader isInside={true} />
+                </div>
+            )}
+            <h1 className="text-3xl font-bold text-center text-black mb-10 mt-10">{id !== '' ? 'Edit' : 'Add New'} City</h1>
+            <div className='min-w-[25%] border rounded-md bg-white p-5 mb-5 space-y-4 text-black'>
 
-                    <Formik
-                        initialValues={cityDetails}
-                        validationSchema={citySchema}
-                        onSubmit={id !== '' ? onUpdate : onSumbit}
-                        enableReinitialize
-                    >
-                        {({ handleChange, values, setFieldValue }) => (
-                            <Form className="space-y-3">
-                                <div className=" items-center gap-3">
-                                    {/* <div className="min-w-[100px]">
+                <Formik
+                    initialValues={cityDetails}
+                    validationSchema={citySchema}
+                    onSubmit={id !== '' ? onUpdate : onSumbit}
+                    enableReinitialize
+                >
+                    {({ handleChange, values, setFieldValue }) => (
+                        <Form className="space-y-3">
+                            <div className=" items-center gap-3">
+                                {/* <div className="min-w-[100px]">
                                     <CustomLabel title="State Name" />
                                 </div>
                                 <div className="flex-1">
@@ -148,46 +147,45 @@ const CityAddUpdate = () => {
                                     />
                                     <ErrorMessage name="stateName" component="div" className="text-red-500 text-sm" />
                                 </div> */}
-                                    <CustomLabel title='State' />
-                                    <StateDropDown
-                                        name='stateId'
-                                        labelVisible={true}
-                                        selectedStateId={parseInt(values.stateId ?? -1)}
-                                        onValue={(stateId, selected) => {
-                                            let id = stateId.stateId.toString()
-                                            // setCityDetails({ stateId: id, cityName: values.cityName });
-                                            // handleChange(selected);
-                                            setFieldValue('stateId', id);
-                                        }}
-                                    />
-                                    <ErrorMessage name="stateId" component="div" className="text-red-500 text-sm" />
+                                <CustomLabel title='State' isCompulsory />
+                                <StateDropDown
+                                    name='stateId'
+                                    labelVisible={true}
+                                    selectedStateId={parseInt(values.stateId ?? -1)}
+                                    onValue={(stateId, selected) => {
+                                        let id = stateId.stateId.toString()
+                                        // setCityDetails({ stateId: id, cityName: values.cityName });
+                                        // handleChange(selected);
+                                        setFieldValue('stateId', id);
+                                    }}
+                                />
+                                <ErrorMessage name="stateId" component="div" className="text-red-500 text-sm" />
+                                <br />
+                                <TextField label='City Name' value={values.cityName} onChange={handleChange} name='cityName' isCompulsory />
+                                <ErrorMessage name="cityName" component="div" className="text-red-500 text-sm" />
+                            </div>
 
-                                    <TextField label='City Name' value={values.cityName} onChange={handleChange} name='cityName' />
-                                    <ErrorMessage name="cityName" component="div" className="text-red-500 text-sm" />
-                                </div>
-
-                                <div className="w-full flex items-center justify-center gap-5 pt-4">
-                                    <button
-                                        type="submit"
-                                        disabled={isLoading}
-                                        className="w-full md:w-auto bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-medium shadow-lg"
-                                    >
-                                        {id !== '' ? 'Update' : 'Submit'}
-                                    </button>
-                                    <button
-                                        type="reset"
-                                        className="w-full md:w-auto bg-[#03508C] text-white hover:bg-[#0874CB] px-6 py-2 rounded-lg font-medium shadow-lg"
-                                        onClick={() => router.back()}
-                                    >
-                                        Cancel
-                                    </button>
-                                </div>
-                            </Form>
-                        )}
-                    </Formik>
-                </div>
+                            <div className="w-full flex items-center justify-center gap-5 pt-4">
+                                <button
+                                    type="submit"
+                                    disabled={isLoading}
+                                    className="w-full md:w-auto bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-medium shadow-lg"
+                                >
+                                    {id !== '' ? 'Update' : 'Submit'}
+                                </button>
+                                <button
+                                    type="reset"
+                                    className="w-full md:w-auto bg-[#03508C] text-white hover:bg-[#0874CB] px-6 py-2 rounded-lg font-medium shadow-lg"
+                                    onClick={() => router.back()}
+                                >
+                                    Cancel
+                                </button>
+                            </div>
+                        </Form>
+                    )}
+                </Formik>
             </div>
-        </Layout>
+        </div>
     )
 }
 

@@ -44,7 +44,7 @@ const AddressDetails: FC<any> = ({ values, handleChange, handleBlur, states, cit
             <h1 className='font-inter underline font-bold'>Billing Address</h1>
             <div className='mt-3 grid grid-cols-3 gap-x-4 gap-y-2'>
                 <div className="sm:col-span-1">
-                    <CustomLabel title='Address Line 1' />
+                    <CustomLabel title='Address Line 1' isCompulsory/>
                     <div className="mt-1">
                         <input type="address" name="addressLine1" autoComplete="given-name" value={values.addressLine1} onChange={handleChange} onBlur={handleBlur} className="block w-full font-inter rounded-md border focus:outline-none border-gray-300 py-1 px-2 text-gray-900 focus:border-blue-500 focus:border-[2px] placeholder:text-gray-400 sm:text-sm sm:leading-6" />
                         <ErrorMessage name="addressLine1" component="div" className="text-red-600 text-sm" />
@@ -65,7 +65,7 @@ const AddressDetails: FC<any> = ({ values, handleChange, handleBlur, states, cit
 
 
                 <div className="sm:col-span-1">
-                    <CustomLabel title='State' />
+                    <CustomLabel title='State' isCompulsory/>
                     <div className="relative w-full mt-1">
                         {/* <select
                             value={values.state1}
@@ -106,7 +106,7 @@ const AddressDetails: FC<any> = ({ values, handleChange, handleBlur, states, cit
 
                 </div>
                 <div className="sm:col-span-1">
-                    <CustomLabel title='City' />
+                    <CustomLabel title='City' isCompulsory/>
                     <div className="relative w-full mt-1">
                         <CityDropDown
                             stateId={values.state1}
@@ -125,7 +125,7 @@ const AddressDetails: FC<any> = ({ values, handleChange, handleBlur, states, cit
 
                 </div>
                 <div className="sm:col-span-1">
-                    <CustomLabel title='Pincode' />
+                    <CustomLabel title='Pincode' isCompulsory/>
                     <div className="mt-1">
                         <input type="number" name='pincode1' autoComplete="given-name" value={values.pincode1} onChange={handleChange} onBlur={handleBlur} className="block w-full font-inter rounded-md border focus:outline-none border-gray-300 py-1 px-2 text-gray-900 focus:border-blue-500 focus:border-[2px] placeholder:text-gray-400 sm:text-sm sm:leading-6" />
                         <ErrorMessage name="pincode1" component="div" className="text-red-600 text-sm" />
@@ -141,7 +141,7 @@ const AddressDetails: FC<any> = ({ values, handleChange, handleBlur, states, cit
             </div>
             <div className='mt-3 grid grid-cols-3 gap-x-4 gap-y-2'>
                 <div className="sm:col-span-1">
-                    <CustomLabel title='Address Line 1' />
+                    <CustomLabel title='Address Line 1' isCompulsory/>
                     <div className="mt-1">
                         <input type="address" name='shippingAddressLine1' autoComplete="given-name" value={values.shippingAddressLine1} onChange={handleChange} onBlur={handleBlur} className="block w-full font-inter rounded-md border focus:outline-none border-gray-300 py-1 px-2 text-gray-900 focus:border-blue-500 focus:border-[2px] placeholder:text-gray-400 sm:text-sm sm:leading-6" />
                         <ErrorMessage name="shippingAddressLine1" component="div" className="text-red-600 text-sm" />
@@ -161,7 +161,7 @@ const AddressDetails: FC<any> = ({ values, handleChange, handleBlur, states, cit
                 </div>
 
                 <div className="sm:col-span-1">
-                    <CustomLabel title='State' />
+                    <CustomLabel title='State' isCompulsory/>
                     <div className="relative w-full mt-1">
                         {/* <select
                             value={values.shippingState}
@@ -200,7 +200,7 @@ const AddressDetails: FC<any> = ({ values, handleChange, handleBlur, states, cit
                     </div>
                 </div>
                 <div className="sm:col-span-1">
-                    <CustomLabel title='City' />
+                    <CustomLabel title='City' isCompulsory/>
                     <div className="relative w-full mt-1">
                         {/* <select
                             value={values.shippingCity}
@@ -232,7 +232,7 @@ const AddressDetails: FC<any> = ({ values, handleChange, handleBlur, states, cit
                     </div>
                 </div>
                 <div className="sm:col-span-1">
-                    <CustomLabel title='Pincode' />
+                    <CustomLabel title='Pincode' isCompulsory/>
                     <div className="mt-1">
                         <input type="number" name='shippingPincode' autoComplete="given-name" value={values.shippingPincode} onChange={handleChange} onBlur={handleBlur} className="block w-full font-inter rounded-md border focus:outline-none border-gray-300 py-1 px-2 text-gray-900 focus:border-blue-500 focus:border-[2px] placeholder:text-gray-400 sm:text-sm sm:leading-6" />
                         <ErrorMessage name="shippingPincode" component="div" className="text-red-600 text-sm" />

@@ -7,6 +7,7 @@ interface TextFieldProps {
   placeholder?: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
   type?: string;
   required?: boolean;
   className?: string;
@@ -21,6 +22,7 @@ const TextField: React.FC<TextFieldProps> = ({
   placeholder,
   value,
   onChange,
+  onBlur,
   type = "text",
   required = false,
   disabled = false, 
@@ -40,10 +42,11 @@ const TextField: React.FC<TextFieldProps> = ({
         type={type}
         value={value}
         onChange={onChange}
+        onBlur={onBlur} 
         placeholder={placeholder}
         required={required}
         disabled={disabled}
-        className={`block w-full rounded-md border focus:outline-none border-gray-300 py-1 px-2 text-gray-900 focus:border-blue-500 focus:border-[2px] placeholder:text-gray-400 sm:text-sm sm:leading-6 ${className} mt-1 font-inter`}
+        className={`block w-full rounded-md border focus:outline-none border-gray-300 py-1 px-2 text-gray-900 focus:border-blue-500 focus:border-[2px] placeholder:text-gray-400 sm:text-sm sm:leading-6 ${className} mt-1 font-inter text-black`}
       />
     </div>
   );

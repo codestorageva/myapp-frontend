@@ -41,7 +41,7 @@ const CityScreen = () => {
         try {
             setIsLoading(true);
             let res = await fetchAllCity(params as GetAllParams);
-            console.log("Response ===============> ",res.data)
+            console.log("Response ===============> ", res.data)
             if (res.successCode === 'FORBIDDEN' || res.successCode === 'UNAUTHORIZED') {
                 handleShow();
             }
@@ -123,70 +123,68 @@ const CityScreen = () => {
     };
 
     return (
-        <Layout>
-            <div className="relative w-full h-full">
-                <div className='relative flex flex-col w-full h-full'>
-                    <h1 className="text-3xl font-bold text-center text-black mb-10">City Details</h1>
-                    <div className="flex items-center justify-between space-x-3">
-                        <div className='py-3 relative'>
-                            <input
-                                type="text"
-                                placeholder="Search Here ...!"
-                                className="px-2 py-1 border rounded-lg text-sm placeholder:text-sm bg-white"
-                                style={{ borderRadius: '0.3rem' }}
-                                onChange={(e) => setSearchData(e.target.value)}
-                            />
-                            <IoSearchSharp className="absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg" />
-                        </div>
-                        <div className='flex space-x-3 mx-3'>
-                            <CustomButton
-                                name="Add New City"
-                                className="text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition font-inter"
-                                style={{ background: `linear-gradient(to right, ${Colors.gradient1}, ${Colors.gradient2})` }}
-                                onClick={() => router.push(ROUTES.add_city)}
-                            />
-                            <CustomButton
-                                name="Restore"
-                                className="bg-gradient-to-t from-red-500 to-red-400 px-3 py-2 rounded flex items-center space-x-1 transition duration-200 text-white hover:bg-gradient-to-t hover:from-red-400 hover:to-red-500 border-0"
-                                onClick={() => router.push(ROUTES.restore_city)}
-
-                            />
-                        </div>
+        <div className="relative w-full h-full">
+            <div className='relative flex flex-col w-full h-full'>
+                <h1 className="text-3xl font-bold text-center text-black mb-10">City Details</h1>
+                <div className="flex items-center justify-between space-x-3">
+                    <div className='py-3 relative'>
+                        <input
+                            type="text"
+                            placeholder="Search Here ...!"
+                            className="px-2 py-1 border rounded-lg text-sm placeholder:text-sm bg-white text-black"
+                            style={{ borderRadius: '0.3rem' }}
+                            onChange={(e) => setSearchData(e.target.value)}
+                        />
+                        <IoSearchSharp className="absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg" />
                     </div>
+                    <div className='flex space-x-3 mx-3'>
+                        <CustomButton
+                            name="Add New City"
+                            className="text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition font-inter"
+                            style={{ background: `linear-gradient(to right, ${Colors.gradient1}, ${Colors.gradient2})` }}
+                            onClick={() => router.push(ROUTES.add_city)}
+                        />
+                        <CustomButton
+                            name="Restore"
+                            className="bg-gradient-to-t from-red-500 to-red-400 px-3 py-2 rounded flex items-center space-x-1 transition duration-200 text-white hover:bg-gradient-to-t hover:from-red-400 hover:to-red-500 border-0"
+                            onClick={() => router.push(ROUTES.restore_city)}
 
-                    <div>
-                        {isLoading ? (
-                            <div className="flex-grow">
-                                <div className="absolute inset-0 flex justify-center items-center">
-                                    <Loader isInside={true} />
-                                </div>
-                            </div>
-                        ) : (
-                            <DataTable
-                                columns={headerColumn}
-                                data={filteredData}
-                                fixedHeader
-                                customStyles={customStyles}
-                                pagination
-                                highlightOnHover
-                                noDataComponent="No records found!"
-                                className='font-inter rounded'
-                            />
-                        )}
+                        />
                     </div>
-                    <DeleteRestoreModal
-                        isModalVisible={isModalOpen}
-                        title="Item"
-                        message=''
-                        onclick={deleteItem}
-                        onHide={handleClose}
-                        closeNoBtn={handleClose}
-                        okBtn={handleClose}
-                        hasPermissionChanged={false}
-                    />
                 </div>
+
+                <div>
+                    {isLoading ? (
+                        <div className="flex-grow">
+                            <div className=" inset-0 flex justify-center items-center">
+                                <Loader isInside={true} />
+                            </div>
+                        </div>
+                    ) : (
+                        <DataTable
+                            columns={headerColumn}
+                            data={filteredData}
+                            fixedHeader
+                            customStyles={customStyles}
+                            pagination
+                            highlightOnHover
+                            noDataComponent="No records found!"
+                            className='font-inter rounded'
+                        />
+                    )}
+                </div>
+                <DeleteRestoreModal
+                    isModalVisible={isModalOpen}
+                    title="Item"
+                    message=''
+                    onclick={deleteItem}
+                    onHide={handleClose}
+                    closeNoBtn={handleClose}
+                    okBtn={handleClose}
+                    hasPermissionChanged={false}
+                />
             </div>
-        </Layout>
+        </div>
     )
 }
 

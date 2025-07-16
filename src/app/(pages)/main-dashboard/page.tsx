@@ -23,8 +23,8 @@ const MainDashboard = () => {
   const [selectedCompanyId, setSelectedCompanyId] = useState<string | null>(null);
 
   const params: Partial<GetAllParams> = {
-          sortDirection: 'asc'
-      }
+    sortDirection: 'asc'
+  }
 
   useEffect(() => {
     get();
@@ -89,7 +89,8 @@ const MainDashboard = () => {
 
   return (
     <Layout showSidebar={false}>
-      <div className="p-4 sm:px-10">
+      <div className='bg-white h-full overflow-auto p-5'>
+           <div className="p-4 sm:px-10">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
           <div>
             <h2 className="text-2xl font-bold text-gray-900">Welcome, </h2>
@@ -102,7 +103,7 @@ const MainDashboard = () => {
           </button> */}
           <div className='flex gap-2'>
             <CustomButton name='New Organization' className="text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition font-inter" style={{ background: `linear-gradient(to right, ${Colors.gradient1}, ${Colors.gradient2})` }} icon={<FontAwesomeIcon icon={faPlus} />} onClick={() => router.push('/company-registration')} />
-            <CustomButton name='Delete Organization' className="text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition font-inter" style={{ background: `linear-gradient(to right, ${Colors.gradient1}, ${Colors.gradient2})` }} icon={<FontAwesomeIcon icon={faTrash} />} onClick={() => {router.push('/deleted_companies')}} />
+            <CustomButton name='Delete Organization' className="text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition font-inter" style={{ background: `linear-gradient(to right, ${Colors.gradient1}, ${Colors.gradient2})` }} icon={<FontAwesomeIcon icon={faTrash} />} onClick={() => { router.push('/deleted_companies') }} />
           </div>
 
         </div>
@@ -114,9 +115,17 @@ const MainDashboard = () => {
           </span>
         </h3>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {companyData.map((org) => (
             <OrganizationCard key={org.companyId} data={org} openMenuId={openMenuId} setOpenMenuId={setOpenMenuId} onEditClick={() => { router.push(`/company-registration?id=${org.companyId.toString()}`) }} onDeleteClick={() => { setSelectedCompanyId(org.companyId.toString()); handleShow(); }} />
+          ))}
+        </div> */}
+
+        <div className="flex flex-wrap gap-4">
+          {companyData.map((org) => (
+            <div key={org.companyId} className="w-full sm:w-1/2 lg:w-1/3 xl:w-1/4">
+              <OrganizationCard key={org.companyId} data={org} openMenuId={openMenuId} setOpenMenuId={setOpenMenuId} onEditClick={() => { router.push(`/company-registration?id=${org.companyId.toString()}`) }} onDeleteClick={() => { setSelectedCompanyId(org.companyId.toString()); handleShow(); }} />
+            </div>
           ))}
         </div>
 
@@ -131,6 +140,8 @@ const MainDashboard = () => {
           hasPermissionChanged={false}
         />
       </div>
+      </div>
+     
     </Layout>
   );
 };

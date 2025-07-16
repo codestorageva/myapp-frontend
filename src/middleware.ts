@@ -5,10 +5,10 @@ export function middleware(request: NextRequest) {
 
   const isPublicPath =
     path === "/login" ||
-    path === "/main-dashboard" ||
+    path === "/organization/main-dashboard" ||
     path === "/dashboard" ;
 
-  const token = request.cookies.get("authjs.session-token")?.value || "";
+  const token  =  request.cookies.get("__Secure-authjs.session-token")?.value || request.cookies.get("authjs.session-token")?.value;
 
   if (isPublicPath && token) {
         return NextResponse.redirect(new URL("/", request.url));

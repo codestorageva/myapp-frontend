@@ -1,0 +1,1 @@
+export const noDataFound = '/assets/images/blank.png'

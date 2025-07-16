@@ -5,6 +5,7 @@ import { API_DATABASE_ENDPOINT } from "@/core/constants/api_endpoint";
 import axios from "axios";
 import { auth } from "../../../../auth";
 import { CustomerData } from "../customer/customer";
+import { OtherCharges } from "@/app/types/invoice";
 
 export interface GenerateInvoiceResponse {
     success: boolean;
@@ -23,6 +24,10 @@ export interface GenerateInvoiceRequest {
     items: InvoiceItems[];
     invoicePrefix: string;
     invoiceNumber: string;
+    roundOff: string;
+    otherCharge: OtherCharges[];
+    narration: string;
+    isRcm: boolean;
 }
 
 export interface InvoiceItems {
@@ -51,8 +56,11 @@ export interface InvoiceData {
     terms: string;
     dueDate: string;
     paymentMode: string;
+    narration: string;
     items: ItemDetails[];
+    otherCharge: OtherChargeDetails[];
     totalTaxableAmount: number;
+    totalIgst: number;
     totalCgst: number;
     totalSgst: number;
     roundOff: number;
@@ -77,6 +85,13 @@ export interface ItemDetails {
     cgstAmount: number;
     sgstAmount: number;
     product: Product;
+}
+
+export interface OtherChargeDetails {
+    otherChargeId: number;
+    label: string;
+    value: string;
+    invoiceId: string;
 }
 
 export interface Product{

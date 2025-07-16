@@ -35,7 +35,9 @@ export interface CompanyData {
   shippingAddress2: string
   shippingAddress3: string
   shippingStateId: string
+  shippingStateName: string
   shippingCityId: string
+  shippingCityName: string
   shippingPincode: string
   panNumber: string
   gstNumber: string
@@ -48,6 +50,8 @@ export interface CompanyData {
   deletedAt: any
   bankDetails: BankDetail[]
   invoices: any[]
+  password: string
+  mobileNumber: string
 }
 
 export interface BankDetail {

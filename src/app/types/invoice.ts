@@ -38,6 +38,7 @@ export type InvoiceDetails = {
     taxAmount: string;
     netAmount: string;
     term: string;
+    narration: string;
 }
 
 export type InvoiceProduct = {
@@ -47,6 +48,11 @@ export type InvoiceProduct = {
     amount: number;
     gstPer: string;
     finalAmount: number;
+    taxPref: string;
 }
 
 
+export type OtherCharges = {
+    label: string;
+    value: number;
+}

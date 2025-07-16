@@ -24,7 +24,7 @@ const GenerateInvoice = () => {
     const [showInvoice, setShowInvoice] = useState(false);
     const today = new Date().toISOString().split('T')[0];
     const dueDate = new Date().toISOString().split('T')[0];
-    const [invoiceData, setInvoiceData] = useState<InvoiceDetails>({ customerId: '', customerName: '', dueDate: dueDate, invoicePrefix: 'VV', invoiceNumber: '000001', companyName: '', date: today, time: '', address: '', city: '', gstNo: '', gstPer: '', items: [{ productId: '', amount: 0, qty: 0, rate: 0, finalAmount:0, gstPer:'0'}], netAmount: '', paymentMode: '', pincode: '', state: '', taxAmount: '', taxValue: '' })
+    const [invoiceData, setInvoiceData] = useState<InvoiceDetails>({term:'Due On Receipt', customerId: '', customerName: '', dueDate: dueDate, invoicePrefix: 'VV', invoiceNumber: '000001', companyName: '', date: today, time: '', address: '', city: '', gstNo: '', gstPer: '', items: [{ productId: '', amount: 0, qty: 0, rate: 0, finalAmount:0, gstPer:'0'}], netAmount: '', paymentMode: '', pincode: '', state: '', taxAmount: '', taxValue: '' })
     const formatDate = (date: Date) => date.toISOString().split('T')[0];
     const [isModalOpen, setIsModalOpen] = useState(false);
     const param: Partial<GetAllParams> = {

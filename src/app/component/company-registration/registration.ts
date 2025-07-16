@@ -1,10 +1,11 @@
 "use server"
-import { API_UN_AUTH_ENDPOINT } from "@/app/core/providers/constants/api_endpoint";
-import { SERVER_URL } from "@/app/core/providers/constants/service";
 
 
+
+import { SERVER_URL } from "@/core/constants";
 import { auth } from "../../../../auth";
 import { apiServiceInstance } from "@/core/service/apis";
+import { API_DATABASE_ENDPOINT, API_ENDPOINTS } from "@/core/constants/api_endpoint";
 
 export interface CompanyRegistrationResponse
 {
@@ -29,7 +30,7 @@ export async function companyReg(data : any){
     
         let response = await apiServiceInstance.post<CompanyRegistrationResponse>({
             baseURL: SERVER_URL,
-            endpoint: API_UN_AUTH_ENDPOINT.companyRegistration,
+            endpoint: API_ENDPOINTS.companyReg,
             headers: {
                 'Content-Type':'application/json',
                 Authorization: (await auth())?.user.authToken ?? "",

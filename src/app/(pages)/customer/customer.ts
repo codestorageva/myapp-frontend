@@ -5,6 +5,7 @@ import { apiServiceInstance } from "@/core/service/apis";
 import { API_DATABASE_ENDPOINT } from "@/core/constants/api_endpoint";
 import axios from "axios";
 import { GetAllParams } from "../items/items";
+import { InvoiceData } from "../invoice/generate-invoice/generate-invoice";
 
 export interface AddCustomerResponse {
   success: boolean;
@@ -17,6 +18,7 @@ export interface AddCustomerRequest {
   salutation: string;
   firstName: string;
   lastName: string;
+  vid: string;
   displayName: string;
   email: string;
   workPhone: string;
@@ -38,6 +40,8 @@ export interface AddCustomerRequest {
   companyId: number;
   contactPersons: ContactPersons[];
   placeOfSupplyStateId: string;
+  terms: string;
+
 }
 
 export interface ContactPersons {
@@ -93,6 +97,9 @@ export interface CustomerData {
   companyId: number;
   placeOfSupplyStateId: string;
   placeOfSupplyStateName: string;
+  invoices: InvoiceData[];
+  vid: string;
+  terms: string;
 }
 export interface ContactPersonData {
   contactPersonId: number;

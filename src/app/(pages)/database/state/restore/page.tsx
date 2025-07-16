@@ -12,6 +12,8 @@ import DataTable, { TableColumn } from 'react-data-table-component';
 import { GoSync } from 'react-icons/go';
 import { IoSearchSharp } from 'react-icons/io5';
 import { toast } from 'react-toastify';
+import Image from 'next/image';
+import { noDataFound } from '@/app/utils/path'
 
 interface DataRow {
     no: number;
@@ -26,19 +28,19 @@ const RestoreStateList = () => {
     const router = useRouter();
     const [restoreStateId, setRestoreStateId] = useState<string | null>(null)
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
     const params: Partial<GetAllParams> = {
         isDeleted: true,
         sortDirection: 'asc',
-        sortBy:'stateName'
+        sortBy: 'stateName'
     }
 
     const headerColumn: TableColumn<DataRow>[] = [
-        { name: 'No', selector: (row) => row.no.toString(), sortable: true, width: '05%' }, // Convert number to string
-        { name: 'State Name', selector: (row) => row.stateName, sortable: true },
+        { name: 'NO', selector: (row) => row.no.toString(), sortable: true, width: '100PX' }, // Convert number to string
+        { name: 'STATE NAME', selector: (row) => row.stateName, sortable: true },
         {
-            name: "Action",
-            width: '04%',
+            name: "ACTION",
+            width: '100PX',
             cell: (row: any) => (
                 <div className="flex flex-col items-center justify-center">
                     <button className="bg-transparent border-none cursor-pointer" onClick={() => { setRestoreStateId(row.no); setIsModalOpen(true) }}>
@@ -47,7 +49,7 @@ const RestoreStateList = () => {
                 </div>
             ),
             ignoreRowClick: true,
-           
+
         },
     ];
 
@@ -56,7 +58,7 @@ const RestoreStateList = () => {
             style: {
                 backgroundColor: "rgba(117, 117, 117, 0.5)",
                 color: "black",
-                fontSize: "14px",
+                fontSize: "12px",
                 textAlign: "center" as "center"
             },
         },
@@ -119,69 +121,79 @@ const RestoreStateList = () => {
     }
 
     return (
-        <Layout>
-            <div className="relative w-full h-full">
-                <div className='relative flex flex-col w-full h-full'>
-                    <h1 className="text-3xl font-bold text-center text-black mb-10">Deleted Item Details</h1>
-                    <div className="flex items-center justify-between space-x-3">
-                        <div className='py-3 relative'>
-                            <input
-                                type="text"
-                                placeholder="Search Here ...!"
-                                className="px-2 py-1 border rounded-lg text-sm placeholder:text-sm bg-white"
-                                style={{ borderRadius: '0.3rem' }}
-                                onChange={(e) => setSearchTableData(e.target.value)}
-                            />
-                            <IoSearchSharp className="absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg" />
-                        </div>
-                        <div className='flex space-x-3 mx-3'>
-                            <CustomButton
-                                name="Back"
-                                // type="submit"
-                                type="button"
-                                onClick={() => {
-                                    router.back();
-                                }}
-                                className="previous-btn  mt-3 mb-2 "
-                            />
 
-                        </div>
+        <div className="relative w-full h-full p-5">
+            <div className='relative flex flex-col w-full h-full'>
+                <h1 className="text-3xl font-bold text-center text-black mb-10">Deleted State Details</h1>
+                <div className="flex items-center justify-between space-x-3">
+                    <div className='py-3 relative'>
+                        <input
+                            type="text"
+                            placeholder="Search Here ...!"
+                            className="px-2 py-1 border rounded-lg text-sm placeholder:text-sm bg-white text-black"
+                            style={{ borderRadius: '0.3rem' }}
+                            onChange={(e) => setSearchTableData(e.target.value)}
+                        />
+                        <IoSearchSharp className="absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg" />
                     </div>
+                    <div className='flex space-x-3 mx-3'>
+                        <CustomButton
+                            name="Back"
+                            // type="submit"
+                            type="button"
+                            onClick={() => {
+                                router.back();
+                            }}
+                            className="previous-btn  mt-3 mb-2 "
+                        />
 
-                    <div>
-                        {isLoading ? (
-                            <div className="flex-grow">
-                                <div className="absolute inset-0 flex justify-center items-center">
-                                    <Loader isInside={true} />
-                                </div>
-                            </div>
-                        ) : (
-                            <DataTable
-                                columns={headerColumn}
-                                data={filteredData}
-                                fixedHeader
-                                customStyles={customStyles}
-                                pagination
-                                highlightOnHover
-                                noDataComponent="No records found!"
-                                className='font-inter rounded'
-                            />
-                        )}
                     </div>
-                    <DeleteRestoreModal
-                        isModalVisible={isModalOpen}
-                        title="Item"
-                        message=''
-                        onclick={restoreSingleState}
-                        onHide={handleClose}
-                        closeNoBtn={handleClose}
-                        okBtn={handleClose}
-                        hasPermissionChanged={false}
-                        isSoftDeletePage={true}
-                    />
                 </div>
+
+                <div>
+                    {isLoading ? (
+                        <div className="flex-grow">
+                            <div className=" inset-0 flex justify-center items-center">
+                                <Loader isInside={true} />
+                            </div>
+                        </div>
+                    ) : (
+                        <DataTable
+                            columns={headerColumn}
+                            data={filteredData}
+                            fixedHeader
+                            customStyles={customStyles}
+                            pagination
+                            highlightOnHover
+                            noDataComponent={
+                                <div className="flex flex-col items-center justify-center py-6 w-full rounded-full">
+                                    <Image
+                                        src={noDataFound}
+                                        alt="No Data Found"
+                                        width={300}
+                                        height={300}
+                                        className="mb-4"
+                                    />
+                                </div>
+                            }
+                            className='font-inter rounded'
+                        />
+                    )}
+                </div>
+                <DeleteRestoreModal
+                    isModalVisible={isModalOpen}
+                    title="State"
+                    message=''
+                    onclick={restoreSingleState}
+                    onHide={handleClose}
+                    closeNoBtn={handleClose}
+                    okBtn={handleClose}
+                    hasPermissionChanged={false}
+                    isSoftDeletePage={true}
+                />
             </div>
-        </Layout>
+        </div>
+
     )
 }
 

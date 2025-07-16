@@ -8,7 +8,8 @@ import { GetAllParams } from '../../items/items';
 import { IoSearchSharp } from 'react-icons/io5';
 import Loader from '@/app/component/Loader/page';
 import { ROUTES } from '@/app/constants/routes';
-
+import Image from 'next/image'; 
+import { noDataFound } from '@/app/utils/path'
 export interface DataRow {
     no: number;
     invoiceNumber: string;
@@ -18,13 +19,13 @@ export interface DataRow {
 const ViewInvoice = () => {
 
     const [dataRows, setDataRows] = useState<DataRow[]>([]);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [invoiceListData, setInvoiceData] = useState<InvoiceData[]>([]);
     const [searchData, setSearchTableData] = useState('');
     const router = useRouter();
 
     useEffect(() => {
-        getAll();
+         getAll();
     }, []);
 
     const param: Partial<GetAllParams> = {
@@ -33,18 +34,18 @@ const ViewInvoice = () => {
 
     const headerColumn: TableColumn<DataRow>[] = [
         {
-            name: 'No',
+            name: 'NO',
             selector: (row) => row.no.toString(),
             sortable: true,
-            width: '5%',
+            width: '100px',
         },
         {
-            name: 'Invoice Number',
+            name: 'INVOICE NUMBER',
             selector: (row) => row.invoiceNumber,
             sortable: true,
             cell: (row) => (
                 <span
-                    onClick={() => {router.push(`${ROUTES.view_invoice}?id=${row.no}`) }}
+                    onClick={() => { router.push(`${ROUTES.view_invoice}?id=${row.no}`) }}
                     className='cursor-pointer'
                 >
                     {row.invoiceNumber}
@@ -53,7 +54,7 @@ const ViewInvoice = () => {
         },
         {
             name: 'Action',
-            width: '5%',
+            width: '70PX',
             cell: (row: any) => (
                 <div style={{
                     display: 'flex',
@@ -69,7 +70,7 @@ const ViewInvoice = () => {
                             cursor: 'pointer',
                             padding: 0,
                         }}
-                        onClick={() => router.push(`${ROUTES.view_invoice}?id=${row.no}`) }
+                        onClick={() => router.push(`${ROUTES.view_invoice}?id=${row.no}`)}
                     >
                         <img src="/assets/icons/view.png" alt="view" width={15} height={15} />
                     </button>
@@ -106,7 +107,7 @@ const ViewInvoice = () => {
             style: {
                 backgroundColor: 'rgba(117, 117, 117, 0.4)',
                 color: 'black',
-                fontSize: '14px',
+                fontSize: '12px',
                 textAlign: 'center' as 'center',
             }
         }, headRow: {
@@ -119,46 +120,57 @@ const ViewInvoice = () => {
     const filteredData = dataRows.filter((row) => Object.values(row).join(' ').toLowerCase().includes(searchData.toLowerCase()));
 
     return (
-        <Layout>
-            <div className="relative w-full h-full">
-                <div className='relative flex flex-col w-full h-full'>
-                    <h1 className="text-3xl font-bold text-center text-black mb-10">Invoice Details</h1>
-                    <div className="flex items-center justify-between space-x-3">
-                        <div className='py-3 relative'>
-                            <input
-                                type="text"
-                                placeholder="Search Here ...!"
-                                className="px-2 py-1 border rounded-lg text-sm placeholder:text-sm bg-white"
-                                style={{ borderRadius: '0.3rem' }}
-                                onChange={(e) => setSearchTableData(e.target.value)}
-                            />
-                            <IoSearchSharp className="absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg" />
-                        </div>
-                    </div>
-                    <div>
-                        {isLoading ? (
-                            <div className="flex-grow">
-                                <div className="absolute inset-0 flex justify-center items-center">
-                                    <Loader isInside={true} />
-                                </div>
-                            </div>
-                        ) : (
-                            <DataTable
-                                columns={headerColumn}
-                                data={filteredData}
-                                fixedHeader
-                                customStyles={customStyles}
-                                pagination
-                                highlightOnHover
-                                noDataComponent="No records found!"
-                                className='font-inter rounded'
-                            />
-                        )}
-                    </div>
 
+        <div className="relative w-full h-full p-5">
+            <div className='relative flex flex-col w-full h-full'>
+                <h1 className="text-3xl font-bold text-center text-black mb-10">Invoice Details</h1>
+                <div className="flex items-center justify-between space-x-3">
+                    <div className='py-3 relative'>
+                        <input
+                            type="text"
+                            placeholder="Search Here ...!"
+                            className="px-2 py-1 border rounded-lg text-sm placeholder:text-sm bg-white text-black"
+                            style={{ borderRadius: '0.3rem' }}
+                            onChange={(e) => setSearchTableData(e.target.value)}
+                        />
+                        <IoSearchSharp className="absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg" />
+                    </div>
                 </div>
+                <div>
+                    {isLoading ? (
+                        <div className="flex-grow">
+                            <div className="inset-0 flex justify-center items-center">
+                                <Loader isInside={true} />
+                            </div>
+                        </div>
+                    ) : (
+                        <DataTable
+                            columns={headerColumn}
+                            data={filteredData}
+                            fixedHeader
+                            customStyles={customStyles}
+                            pagination
+                            highlightOnHover
+                            noDataComponent={
+                                <div className="flex flex-col items-center justify-center py-6 w-full rounded-full">
+                                    <Image
+                                        src={noDataFound}
+                                        alt="No Data Found"
+                                        width={300}
+                                        height={300}
+                                        className="mb-4"
+                                    />
+                                </div>
+                            }
+                            className='font-inter rounded'
+
+                        />
+                    )}
+                </div>
+
             </div>
-        </Layout>
+        </div>
+
 
     )
 }

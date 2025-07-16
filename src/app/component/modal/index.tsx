@@ -62,7 +62,8 @@ export default function DeleteRestoreModal({
             /> */}
 
             <CustomButton
-              className="bg-gradient-to-t from-red-500 to-red-400 px-3 py-1.5 rounded flex items-center space-x-1 transition duration-200 text-white hover:bg-gradient-to-t hover:from-red-400 hover:to-red-500 border-0"
+              // className="bg-gradient-to-t from-red-500 to-red-400 px-3 py-1.5 rounded flex items-center space-x-1 transition duration-200 text-white hover:bg-gradient-to-t hover:from-red-400 hover:to-red-500 border-0"
+              className="previous-btn"
               showInitially={true}
               name="No"
               onClick={closeNoBtn}
@@ -70,7 +71,7 @@ export default function DeleteRestoreModal({
             />
             
             <CustomButton
-              className="text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition font-inter"
+              className="ok-btn"
               showInitially={true}
               name="Yes"
               onClick={onclick}
@@ -87,7 +88,8 @@ export default function DeleteRestoreModal({
           </Modal.Header>
           <Modal.Footer>
             <CustomButton
-              className={"btn text-light yesbtn"}
+              // className={"btn text-light yesbtn"}
+              className="ok-btn"
               showInitially={true}
               name="Ok"
               // onclick={okBtn}

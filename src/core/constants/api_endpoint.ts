@@ -1,4 +1,5 @@
 export const API_ENDPOINTS = {
+    login: '/auth/login',
     companyReg: 'company',
     companyList: 'company',
     companyDetails: 'company/',

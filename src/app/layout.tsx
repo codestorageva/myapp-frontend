@@ -4,6 +4,7 @@ import "./globals.css";
 import Providers from "@/core/providers/providers";
 import { ToastContainer } from "react-toastify";
 import "bootstrap/dist/css/bootstrap.min.css";
+// import './style/common.css';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

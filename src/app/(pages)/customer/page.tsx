@@ -13,6 +13,8 @@ import { IoSearchSharp } from 'react-icons/io5';
 import CustomButton from '@/app/component/buttons/page';
 import Colors from '@/app/utils/colors';
 import Loader from '@/app/component/Loader/page';
+import Image from 'next/image'; 
+import { noDataFound } from '@/app/utils/path'
 
 export interface DataRow {
   no: number;
@@ -28,7 +30,7 @@ const CustomerScreen = () => {
   const router = useRouter();
   const [deleteCustomerId, setCustomerId] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     getall();
@@ -40,13 +42,13 @@ const CustomerScreen = () => {
 
   const headerColumn: TableColumn<DataRow>[] = [
     {
-      name: 'No',
+      name: 'NO',
       selector: (row) => row.no.toString(),
       sortable: true,
-      width: '5%',
+      width: '100PX',
     },
     {
-      name: 'Customer Name',
+      name: 'CUSTOMER NAME',
       selector: (row) => row.customerName,
       sortable: true,
       cell: (row) => (
@@ -59,42 +61,42 @@ const CustomerScreen = () => {
       ),
     },
     {
-      name: 'Email',
+      name: 'EMAIL',
       selector: (row) => row.email,
       sortable: true,
     },
     {
-      name: "Action",
-      width: '05%',
+      name: "ACTION",
+      width: '120px',
       cell: (row: any) => (
-          <div style={{ display: "flex", gap: "8px" }}>
-            <button
+        <div style={{ display: "flex", gap: "8px" }}>
+          <button
             style={{ background: 'none', border: 'none', cursor: 'pointer' }}
             onClick={() => router.push(`${ROUTES.view_customer}?id=${row.no}`)}
           >
-            <img src='/assets/icons/view.png' alt="view" />
+            <img src='/assets/icons/view.png' alt="view" width={20}/>
           </button>
-              <button
-                  style={{ background: "none", border: "none", cursor: "pointer" }}
-                  onClick={() => {
-                    router.push(`${ROUTES.add_customer}?id=${row.no}`)
-                  }}
-              >
-                  <img src='/assets/icons/edit.png' />
-              </button>
-              <button
-                  style={{ background: "none", border: "none", cursor: "pointer" }}
-                  onClick={() => {
-                    setCustomerId(row.no);
-                      handleShow();
-                  }}
-              >
-                  <img src='/assets/icons/delete.png' />
-              </button>
-          </div>
+          <button
+            style={{ background: "none", border: "none", cursor: "pointer" }}
+            onClick={() => {
+              router.push(`${ROUTES.add_customer}?id=${row.no}`)
+            }}
+          >
+            <img src='/assets/icons/edit.png' width={20}/>
+          </button>
+          <button
+            style={{ background: "none", border: "none", cursor: "pointer" }}
+            onClick={() => {
+              setCustomerId(row.no);
+              handleShow();
+            }}
+          >
+            <img src='/assets/icons/delete.png' width={15}/>
+          </button>
+        </div>
       ),
       ignoreRowClick: true,
-  },
+    },
     // {
     //   name: 'Action',
     //   width: '06%',
@@ -143,7 +145,7 @@ const CustomerScreen = () => {
       style: {
         backgroundColor: 'rgba(117, 117, 117, 0.4)',
         color: 'black',
-        fontSize: '14px',
+        fontSize: '12px',
         textAlign: 'center' as 'center'
       }
     }, headRow: {
@@ -206,71 +208,82 @@ const CustomerScreen = () => {
   }
 
   return (
-    <Layout>
-      <div className="relative w-full h-full">
-        <div className='relative flex flex-col w-full h-full'>
-          <h1 className="text-3xl font-bold text-center text-black mb-10">Customer Details</h1>
-          <div className="flex items-center justify-between space-x-3">
-            <div className='py-3 relative'>
-              <input
-                type="text"
-                placeholder="Search Here ...!"
-                className="px-2 py-1 border rounded-lg text-sm placeholder:text-sm bg-white"
-                style={{ borderRadius: '0.3rem' }}
-                onChange={(e) => setSearchTableData(e.target.value)}
-              />
-              <IoSearchSharp className="absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg" />
-            </div>
-            <div className='flex space-x-3 mx-3'>
-              <CustomButton
-                name="Add New State"
-                className="text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition font-inter"
-                style={{ background: `linear-gradient(to right, ${Colors.gradient1}, ${Colors.gradient2})` }}
-                onClick={() => router.push(ROUTES.add_customer)}
-              />
-              <CustomButton
-                name="Restore"
-                className="bg-gradient-to-t from-red-500 to-red-400 px-3 py-2 rounded flex items-center space-x-1 transition duration-200 text-white hover:bg-gradient-to-t hover:from-red-400 hover:to-red-500 border-0"
-                onClick={() => router.push(ROUTES.restore_customer)}
-
-              />
-            </div>
+    <div className="relative w-full h-full p-5">
+      <div className='relative flex flex-col w-full h-full'>
+        <h1 className="text-3xl font-bold text-center text-black mb-10">Customer Details</h1>
+        <div className="flex items-center justify-between space-x-3 text-black">
+          <div className='py-3 relative'>
+            <input
+              type="text"
+              placeholder="Search Here ...!"
+              className="px-2 py-1 border rounded-lg text-sm placeholder:text-sm bg-white"
+              style={{ borderRadius: '0.3rem' }}
+              onChange={(e) => setSearchTableData(e.target.value)}
+            />
+            <IoSearchSharp className="absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg" />
           </div>
+          <div className='flex space-x-3 mx-3'>
+            <CustomButton
+              name="Add New Customer"
+              className="text-white px-4 py-2 rounded-lg text-sm  border-none transition font-inter"
+              style={{ background: `linear-gradient(to right, ${Colors.gradient1}, ${Colors.gradient2})` }}
+              onClick={() => router.push(ROUTES.add_customer)}
+            />
+            <CustomButton
+              name="Restore"
+              className="text-white px-4 py-2 rounded-lg text-sm border-none transition font-inter shadow-md hover:shadow-lg hover:brightness-105"
+              style={{
+                background: 'linear-gradient(to right, #4b5563, #9ca3af)', // Gray-600 to Gray-400
+              }} onClick={() => router.push(ROUTES.restore_customer)}
 
-          <div>
-            {isLoading ? (
-              <div className="flex-grow">
-                <div className="absolute inset-0 flex justify-center items-center">
-                  <Loader isInside={true} />
-                </div>
-              </div>
-            ) : (
-              <DataTable
-                columns={headerColumn}
-                data={filteredData}
-                fixedHeader
-                customStyles={customStyles}
-                pagination
-                highlightOnHover
-                noDataComponent="No records found!"
-                className='font-inter rounded'
-              />
-            )}
+            />
           </div>
-
-          <DeleteRestoreModal
-            isModalVisible={isModalOpen}
-            title="Item"
-            message=''
-            onclick={deleteCustomer}
-            onHide={handleClose}
-            closeNoBtn={handleClose}
-            okBtn={handleClose}
-            hasPermissionChanged={false}
-          />
         </div>
+
+        <div>
+          {isLoading ? (
+            <div className="flex-grow">
+              <div className="inset-0 flex justify-center items-center">
+                <Loader isInside={true} />
+              </div>
+            </div>
+          ) : (
+            <DataTable
+              columns={headerColumn}
+              data={filteredData}
+              fixedHeader
+              customStyles={customStyles}
+              pagination
+              highlightOnHover
+              noDataComponent={
+                <div className="flex flex-col items-center justify-center py-6 w-full rounded-full">
+                  <Image
+                    src={noDataFound}
+                    alt="No Data Found"
+                    width={300}
+                    height={300}
+                    className="mb-4"
+                  />
+                </div>
+              }
+              className='font-inter rounded'
+            />
+          )}
+        </div>
+
+        <DeleteRestoreModal
+          isModalVisible={isModalOpen}
+          title="Customer"
+          message=''
+          onclick={deleteCustomer}
+          onHide={handleClose}
+          closeNoBtn={handleClose}
+          okBtn={handleClose}
+          hasPermissionChanged={false}
+        />
       </div>
-    </Layout>
+    </div>
+
   )
 }
 
