@@ -4,7 +4,7 @@ import React, { JSX, useEffect, useState } from 'react'
 import { getAllInvoice, InvoiceData } from '../generate-invoice/generate-invoice';
 import { useRouter } from 'next/navigation';
 import DataTable, { TableColumn } from 'react-data-table-component';
-import { GetAllParams } from '../../items/items';
+import { GetAllParams } from '../items/items';
 import { IoSearchSharp } from 'react-icons/io5';
 import Loader from '@/app/component/Loader/page';
 import { ROUTES } from '@/app/constants/routes';

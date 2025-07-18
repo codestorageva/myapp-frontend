@@ -216,58 +216,6 @@ const NavItems = (): NavItem[] => {
       position: 'top',
     },
     {
-      name: 'Sales',
-      href: '#',
-      icon: <FaChartLine />,
-      active: false,
-      position: 'top',
-      children: [
-        {
-          name: 'Invoice',
-          href: '/invoice',
-          icon: <FaFileInvoiceDollar />,
-          active: isNavItemActive('/invoice'),
-          position: 'top',
-          children: [
-            {
-              name: 'Generate Invoice',
-              href: '/invoice/generate-invoice',
-              icon: null,
-              active: pathname === '/invoice/generate-invoice'
-            },
-            {
-              name: 'View Invoices',
-              href: '/invoice/view',
-              icon: null,
-              active: pathname === '/invoice/view'
-            }
-          ]
-        },
-        {
-          name: 'Customer',
-          href: '/customer',
-          icon: <FaUser />,
-          active: isNavItemActive('/customer'),
-          position: 'top',
-          onAddClickHref: '/customer',
-          children: [
-            {
-              name: 'Customer List',
-              href: '/customer/list',
-              icon: null,
-              active: pathname === '/customer/list'
-            },
-            {
-              name: 'Add Customer',
-              href: '/customer/add',
-              icon: null,
-              active: pathname === '/customer/add'
-            }
-          ]
-        },
-      ]
-    },
-    {
       name: 'Purchase',
       href: '/purchase',
       icon: <FaReceipt />,
@@ -303,6 +251,60 @@ const NavItems = (): NavItem[] => {
         }
       ]
     },
+    {
+      name: 'Sales',
+      href: '#',
+      icon: <FaChartLine />,
+      active: false,
+      position: 'top',
+      children: [
+        {
+          name: 'Invoice',
+          href: '/sales/invoice',
+          icon: <FaFileInvoiceDollar />,
+          active: pathname === '/sales/invoice',
+          // active: pathname.startsWith('/invoice'),
+          position: 'top',
+          // children: [
+          //   {
+          //     name: 'Generate Invoice',
+          //     href: '/invoice/generate-invoice',
+          //     icon: null,
+          //     active: pathname === '/invoice/generate-invoice'
+          //   },
+          //   {
+          //     name: 'View Invoices',
+          //     href: '/invoice/view',
+          //     icon: null,
+          //     active: pathname === '/invoice/view'
+          //   }
+          // ]
+        },
+        {
+          name: 'Customer',
+          href: '/sales/customer',
+          icon: <FaUser />,
+          active: isNavItemActive('/sales/customer'),
+          position: 'top',
+          onAddClickHref: '/customer',
+          // children: [
+          //   {
+          //     name: 'Customer List',
+          //     href: '/customer/list',
+          //     icon: null,
+          //     active: pathname === '/customer/list'
+          //   },
+          //   {
+          //     name: 'Add Customer',
+          //     href: '/customer/add',
+          //     icon: null,
+          //     active: pathname === '/customer/add'
+          //   }
+          // ]
+        },
+      ]
+    },
+
     // {
     //   name: 'Invoice',
     //   href: '/generate-invoice',
@@ -374,40 +376,40 @@ const NavItems = (): NavItem[] => {
           href: '/database/state',
           icon: null,
           active: isNavItemActive('/database/state'),
-          children: [
-            {
-              name: 'State List',
-              href: '/database/state/list',
-              icon: null,
-              active: pathname === '/database/state/list',
-            },
-            {
-              name: 'Add State',
-              href: '/database/state/add',
-              icon: null,
-              active: pathname === '/database/state/add',
-            },
-          ],
+          // children: [
+          //   {
+          //     name: 'State List',
+          //     href: '/database/state/list',
+          //     icon: null,
+          //     active: pathname === '/database/state/list',
+          //   },
+          //   {
+          //     name: 'Add State',
+          //     href: '/database/state/add',
+          //     icon: null,
+          //     active: pathname === '/database/state/add',
+          //   },
+          // ],
         },
         {
           name: 'City',
           href: '/database/city',
           icon: null,
           active: isNavItemActive('/database/city'),
-          children: [
-            {
-              name: 'City List',
-              href: '/database/city/list',
-              icon: null,
-              active: pathname === '/database/city/list',
-            },
-            {
-              name: 'Add City',
-              href: '/database/city/add',
-              icon: null,
-              active: pathname === '/database/city/add',
-            },
-          ],
+          // children: [
+          //   {
+          //     name: 'City List',
+          //     href: '/database/city/list',
+          //     icon: null,
+          //     active: pathname === '/database/city/list',
+          //   },
+          //   {
+          //     name: 'Add City',
+          //     href: '/database/city/add',
+          //     icon: null,
+          //     active: pathname === '/database/city/add',
+          //   },
+          // ],
         },
       ],
     },

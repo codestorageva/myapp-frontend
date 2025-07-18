@@ -109,6 +109,7 @@ const SideNav: React.FC<SideNavProps> = ({ sidebarOpen, setSidebarOpen }) => {
 
 
         <>
+            {/*  Overlay when sidebar is open in mobile */}
             {sidebarOpen && (
                 <div
                     className="fixed inset-0 bg-black/40 bg-opacity-40 z-[999] sm:hidden"
@@ -116,6 +117,7 @@ const SideNav: React.FC<SideNavProps> = ({ sidebarOpen, setSidebarOpen }) => {
                 />
             )}
 
+            {/*  Sidebar */}
             <div
                 className={cn(
                     'transition-all duration-300 ease-in-out transform m-4 rounded-lg',
@@ -272,20 +274,13 @@ export const SideNavItem: React.FC<{
         const hasSubChildren =
             hasChildren && children.some((child) => child.children && child.children.length > 0);
         const router = useRouter();
-        // const isChildRoute = hasChildren
-        //     ? children.some(
-        //         (child) =>
-        //             pathname === child.href ||
-        //             (child.children && child.children.some((subChild) => pathname === subChild.href))
-        //     )
-        //     : false;
         const isChildRoute = hasChildren
             ? children.some(
                 (child) =>
-                    pathname.startsWith(child.href) ||
-                    (child.children && child.children.some((subChild) => pathname.startsWith(subChild.href)))
+                    pathname === child.href ||
+                    (child.children && child.children.some((subChild) => pathname === subChild.href))
             )
-            : pathname.startsWith(path);
+            : false;
 
         // const isChildRoute = hasChildren
         //     ? children.some(
@@ -343,22 +338,11 @@ export const SideNavItem: React.FC<{
         //         ? "bg-neutral-200/60 text-neutral-700 dark:bg-neutral-800/60 dark:text-white"
         //         : "text-white hover:bg-white hover:text-black group"
         // );
-        // const itemClass = cn(
-        //     "cursor-pointer font-inter relative flex items-center whitespace-nowrap text-base transition-all duration-300 mx-3 group",
-        //     isActive
-        //         ? `bg-white text-neutral-700 rounded-full`
-        //         : "text-white hover:bg-white group-hover:text-black rounded-md mr-4"
-        // );
-
         const itemClass = cn(
             "cursor-pointer font-inter relative flex items-center whitespace-nowrap text-base transition-all duration-300 mx-3 group",
-            isExpanded && isActive && hasChildren
-                ? "bg-white/40 text-white rounded-full" :
-                isActive && !isExpanded ?
-                    'text-white/70'
-                    : isActive
-                        ? "bg-white text-neutral-700 rounded-full"
-                        : "text-white hover:bg-white group-hover:text-black rounded-md mr-4"
+            isActive
+                ? "bg-white text-neutral-700 rounded-full"
+                : "text-white hover:bg-white group-hover:text-black rounded-md mr-4"
         );
 
         const handleClick = () => {
@@ -464,7 +448,7 @@ export const SideNavItem: React.FC<{
 
 
 
-                {/* {hasChildren && isExpanded && isSidebarExpanded && (
+                {hasChildren && isExpanded && isSidebarExpanded && (
                     <div className="ml-6 mt-1 space-y-1">
                         {children.map((child, idx) => {
                             const hasSubChildren = Array.isArray(child.children) && child.children.length > 0;
@@ -513,7 +497,7 @@ export const SideNavItem: React.FC<{
                                             href={child.href}
                                             className={cn(
                                                 "block px-2 py-1 text-sm transition-colors duration-200 group hover:rounded-md hover:bg-white text-white ml-2 no-underline",
-
+                                                // pathname === child.href || pathname.startsWith(child.href + '/')
                                                 pathname === child.href || pathname.startsWith(child.href + '/')
                                                     ? "bg-white text-neutral-700  rounded-full mr-6"
                                                     : " hover:text-black mr-6"
@@ -523,6 +507,7 @@ export const SideNavItem: React.FC<{
                                         </Link>
                                     )}
 
+                                    {/* Sub-sub menu */}
                                     {hasSubChildren && isChildExpanded && (
                                         <div className="ml-4 mt-1 space-y-1">
                                             {child.children?.map((subChild, subIdx) => (
@@ -532,90 +517,6 @@ export const SideNavItem: React.FC<{
                                                     className={cn(
                                                         "block px-2 py-1 text-sm transition-colors duration-200 group hover:rounded-md hover:bg-white text-white no-underline",
                                                         pathname?.includes(subChild.href)
-                                                            ? "bg-white text-neutral-700 rounded-full mr-6"
-                                                            : "  hover:text-black mr-6"
-                                                    )}
-                                                >
-                                                    <span className="group-hover:text-neutral-800">{subChild.name}</span>
-                                                </Link>
-                                            ))}
-                                        </div>
-                                    )}
-                                </div>
-                            );
-                        })}
-                    </div>
-                )} */}
-                {hasChildren && isExpanded && isSidebarExpanded && (
-                    <div className="ml-6 mt-1 space-y-1">
-                        {children.map((child, idx) => {
-                            const hasSubChildren = Array.isArray(child.children) && child.children.length > 0;
-                            const childKey = `${label}-${idx}`;
-                            const isChildExpanded = expandedMenu.includes(childKey);
-
-                            return (
-                                <div key={idx}>
-                                    {hasSubChildren ? (
-                                        <div onClick={() => toggleChild(childKey)} className={cn('mr-6 cursor-pointer relative flex items-center whitespace-nowrap rounded-md text-base transition-all duration-300',
-                                            pathname.startsWith(child.href) ? 'bg-white text-neutral-700 rounded-full' : 'text-white hover:bg-white hover:text-black group'
-                                        )}>
-                                            <div
-                                                className={cn(
-                                                    "cursor-pointer block px-2 py-1 text-sm transition-colors duration-200 group hover:rounded-md hover:bg-white ml-2",
-                                                    pathname.startsWith(child.href) ? "bg-white text-neutral-700 rounded-full mr-6" : " hover:text-black mr-6"
-                                                )}
-                                            >
-                                                <span className="group-hover:text-neutral-800">{child.name}</span>
-                                            </div>
-                                            {isSidebarExpanded && (
-                                                <div className="ml-auto cursor-pointer group-hover:text-black mr-2">
-                                                    {isChildExpanded ? <FaChevronLeft /> : <FaChevronRight />}
-                                                </div>
-                                            )}
-                                        </div>
-                                    ) : (
-                                        <Link
-                                            href={child.href}
-                                            className={cn(
-                                                "block px-2 py-1 text-sm transition-colors duration-200 group hover:rounded-md hover:bg-white text-white ml-2 no-underline",
-                                                pathname.startsWith(child.href) || pathname === child.href
-                                                    ? "bg-white text-neutral-700 rounded-full mr-6"
-                                                    : " hover:text-black mr-6"
-                                            )}
-                                        >
-                                            <span className="group-hover:text-neutral-800">{child.name}</span>
-                                        </Link>
-                                        // <Link
-                                        //     href={child.href}
-                                        //     className={cn(
-                                        //         "block px-2 py-1 text-sm transition-colors duration-200 group hover:rounded-md hover:bg-white text-white ml-2 no-underline",
-                                        //         child.name === 'Invoice'
-                                        //             ? (
-                                        //                 pathname.startsWith('/invoice')
-                                        //                     ? "bg-white text-neutral-700 rounded-full mr-6"
-                                        //                     : "hover:text-black mr-6"
-                                        //             )
-                                        //             : (
-                                        //                 // For other items, use the original condition
-                                        //                 pathname === child.href || pathname.startsWith(child.href + '/')
-                                        //                     ? "bg-white text-neutral-700 rounded-full mr-6"
-                                        //                     : "hover:text-black mr-6"
-                                        //             )
-                                        //     )}
-                                        // >
-                                        //     <span className="group-hover:text-neutral-800">{child.name}</span>
-                                        // </Link>
-                                    )}
-
-                                    {hasSubChildren && isChildExpanded && (
-                                        <div className="ml-4 mt-1 space-y-1">
-                                            {child.children?.map((subChild, subIdx) => (
-                                                <Link
-                                                    key={subIdx}
-                                                    href={subChild.href}
-                                                    className={cn(
-                                                        "block px-2 py-1 text-sm transition-colors duration-200 group hover:rounded-md hover:bg-white text-white no-underline",
-                                                        pathname.includes(subChild.href)
                                                             ? "bg-white text-neutral-700 rounded-full mr-6"
                                                             : "  hover:text-black mr-6"
                                                     )}

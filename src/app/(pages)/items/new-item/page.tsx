@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import CustomLabel from '@/app/component/label';
 import Layout from '@/app/component/layout';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
@@ -10,7 +10,7 @@ import { Loader } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 
-const AddNewItem = () => {
+const AddNewItem: FC<any> = ({ isModalOpen = false, onClick }) => {
   const [itemType, setItemType] = useState('Goods');
   const unitOptions = ['gm', 'kg', 'mg', 'ltr', 'ml', 'piece', 'pack', 'box', 'dozen', 'meter', 'cm', 'inch', 'per minute', 'Ton'];
   const taxPreference = ['Taxable', 'Non-Taxable', 'Out of Scope', 'Non-GST Supply'];
@@ -66,7 +66,13 @@ const AddNewItem = () => {
         });
         setValues({ hsnCode: '', name: '', taxPref: '', unit: '', taxPer: '', sellingPrice: '' });
         setItemType('Goods');
-        router.replace('/items')
+        if (isModalOpen) {
+          onClick();
+        }
+        else {
+          router.replace('/items')
+        }
+
       } else {
         toast.error(`🤔 ${res.message}`, {
           autoClose: 2000,
@@ -103,7 +109,13 @@ const AddNewItem = () => {
         });
         setValues({ hsnCode: '', name: '', taxPref: '', unit: '', taxPer: '', sellingPrice: '' });
         setItemType('Goods');
-        router.replace('/items')
+        if (isModalOpen) {
+          router.back()
+        }
+        else {
+          router.replace('/items')
+        }
+
       }
       else {
         toast.error(`🤔 ${res.message}`, {
@@ -306,7 +318,14 @@ const AddNewItem = () => {
                 <button
                   type="reset"
                   className="w-full md:w-auto bg-[#03508C] text-white hover:bg-[#0874CB] px-6 py-2 rounded-lg font-medium shadow-lg"
-                  onClick={() => router.replace('/items')}
+                  onClick={() => {
+                    if (isModalOpen) {
+                      onClick();
+                    }
+                    else {
+                      router.replace('/items')
+                    }
+                  }}
                 >
                   Cancel
                 </button>

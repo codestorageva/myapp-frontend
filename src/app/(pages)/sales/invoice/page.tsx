@@ -1,7 +1,7 @@
 'use client'
 import Layout from '@/app/component/layout'
 import React, { JSX, useEffect, useState } from 'react'
-import { getAllInvoice, InvoiceData } from '../generate-invoice/generate-invoice';
+import { getAllInvoice, InvoiceData } from '../../generate-invoice/generate-invoice';
 import { useRouter } from 'next/navigation';
 import DataTable, { TableColumn } from 'react-data-table-component';
 import { GetAllParams } from '../../items/items';

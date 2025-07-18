@@ -586,7 +586,7 @@ const GenerateInvoice = () => {
                                                                 <select
                                                                     value={row.productId}
                                                                     onChange={(e) => handleItemChange(idx, e.target.value)}
-                                                                    className="w-full border bg-white py-1 focus:border-red-500 focus:ring-1 focus:ring-red-300  border-gray-300 rounded px-2 text-sm"
+                                                                    className="w-full border bg-white py-1 focus:border-red-500 focus:ring-1 focus:ring-red-300  border-gray-300 rounded text-sm"
                                                                 >
                                                                     <option value="">Select an item</option>
                                                                     {itemList.map((item: GetAllItemData) => (
@@ -594,6 +594,7 @@ const GenerateInvoice = () => {
                                                                             {item.productName}
                                                                         </option>
                                                                     ))}
+                                                                    
                                                                 </select>
                                                             </td>
                                                             <td className="p-2 text-right">

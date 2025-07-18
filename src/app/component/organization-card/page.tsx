@@ -85,7 +85,7 @@ export default function OrganizationCard({
             // Perform the intended action
             if (pendingAction === 'go') {
                 router.replace(`/dashboard-page?companyId=${data.companyId}`);
-                toast.success('Password verify successfully!')
+                toast.success('Password verify successfully!',{ autoClose: 2000 })
             } else if (pendingAction === 'edit' && onEditClick) {
                 onEditClick();
             } else if (pendingAction === 'delete' && onDeleteClick) {

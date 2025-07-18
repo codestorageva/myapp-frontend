@@ -255,7 +255,7 @@ const CompanyRegistration = () => {
                     fill
                     className="!object-cover !object-center"
                 />
-                <div className="absolute inset-0 bg-black/40 z-0" />
+                {/* <div className="absolute inset-0 bg-black/40 z-0" /> */}
             </div>
             {isLoading && <Loader />}
             <OrgLayout showSidebar={false} transparentBg>

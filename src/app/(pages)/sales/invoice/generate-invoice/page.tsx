@@ -8,9 +8,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { use, useEffect, useState } from 'react'
 import PreviewInvoice from '../view-invoice/page'
 import { InvoiceIDModel } from '@/app/component/invoice_prefix_model.tsx'
-import { CustomerData, fetchAllCustomer } from '../../customer/customer'
-import { GetAllItemData, getAllItems, GetAllParams } from '../../items/items'
-import StateDropDown from '../../common/state_dropdown/page'
+import { CustomerData, fetchAllCustomer } from '../../../customer/customer'
+import { GetAllItemData, getAllItems, GetAllParams } from '../../../items/items'
+import StateDropDown from '../../../common/state_dropdown/page'
 import * as Yup from "yup";
 import { ErrorMessage, Form, Formik } from 'formik'
 import PreviewInvoicePDF from '../view-invoice/page2'
@@ -21,7 +21,7 @@ import Loader from '@/app/component/Loader/page'
 import { useRouter } from 'next/navigation'
 import { ROUTES } from '@/app/constants/routes'
 import Colors from '@/app/utils/colors'
-import AddNewItem from '../../items/new-item/page'
+import AddNewItem from '../../../items/new-item/page'
 
 const GenerateInvoice = () => {
     const [state, setStateName] = useState('')

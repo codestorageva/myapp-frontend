@@ -71,7 +71,7 @@ const CityScreen = () => {
         { name: 'City Name', selector: (row) => row.cityName, sortable: true },
         {
             name: "Action",
-            width: '04%',
+            width: '120px',
             cell: (row: any) => (
                 <div style={{ display: "flex", gap: "10px" }}><button style={{ background: "none", border: "none", cursor: "pointer" }} onClick={() => router.push(`${ROUTES.add_city}?id=${row.no}`)}>
                     <img src='/assets/icons/edit.png' />
@@ -123,7 +123,7 @@ const CityScreen = () => {
     };
 
     return (
-        <div className="relative w-full h-full">
+        <div className="relative w-full h-full p-5">
             <div className='relative flex flex-col w-full h-full'>
                 <h1 className="text-3xl font-bold text-center text-black mb-10">City Details</h1>
                 <div className="flex items-center justify-between space-x-3">
@@ -140,17 +140,20 @@ const CityScreen = () => {
                     <div className='flex space-x-3 mx-3'>
                         <CustomButton
                             name="Add New City"
-                            className="text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition font-inter"
+                            className="text-white px-4 py-2 rounded-lg text-sm  border-none transition font-inter"
                             style={{ background: `linear-gradient(to right, ${Colors.gradient1}, ${Colors.gradient2})` }}
                             onClick={() => router.push(ROUTES.add_city)}
                         />
                         <CustomButton
                             name="Restore"
-                            className="bg-gradient-to-t from-red-500 to-red-400 px-3 py-2 rounded flex items-center space-x-1 transition duration-200 text-white hover:bg-gradient-to-t hover:from-red-400 hover:to-red-500 border-0"
-                            onClick={() => router.push(ROUTES.restore_city)}
+                            className="text-white px-4 py-2 rounded-lg text-sm border-none transition font-inter shadow-md hover:shadow-lg hover:brightness-105"
+                            style={{
+                                background: 'linear-gradient(to right, #4b5563, #9ca3af)', // Gray-600 to Gray-400
+                            }} onClick={() => router.push(ROUTES.restore_city)}
 
                         />
                     </div>
+                    
                 </div>
 
                 <div>

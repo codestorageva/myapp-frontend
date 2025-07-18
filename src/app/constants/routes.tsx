@@ -7,11 +7,11 @@ export const ROUTES = {
     add_city: '/database/city/add',
     restore_city: '/database/city/restore',
 
-    add_customer: '/customer/add',
-    restore_customer: '/customer/restore/',
-    view_customer: '/customer/view/',
+    add_customer: '/sales/customer/add',
+    restore_customer: '/sales/customer/restore/',
+    view_customer: '/sales/customer/view/',
 
-    view_invoice: '/invoice/view-invoice',
+    view_invoice: '/sales/invoice/view-invoice',
 
 
     add_vendor: '/purchase/vendor/add',
@@ -20,5 +20,7 @@ export const ROUTES = {
 
     add_bill: '/purchase/bills/bill',
     view_bill: '/purchase/bills/view',
-    bill_payment: '/purchase/vendor/bill_payment'
+    bill_payment: '/purchase/vendor/bill_payment',
+
+    generate_invoice: '/sales/invoice/generate-invoice'
 }

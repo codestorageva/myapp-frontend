@@ -177,18 +177,18 @@ const CompanyUpdate = () => {
                 password: values.password,
                 mobileNumber: values.phoneNo
             }
-            // let res = await companyUpdate(values.logo ?? null, req, id);
-            // setIsLoading(false);
-            // if (res.success) {
-            //     toast.success(`🎉 ${res.message}`, {
-            //         autoClose: 2000,
-            //         onClose: () => { },
-            //     });
-            //     router.back();
-            // }
-            // else {
-            //     alert(res.message);
-            // }
+            let res = await companyUpdate(values.logo ?? null, req, id);
+            setIsLoading(false);
+            if (res.success) {
+                toast.success(`🎉 ${res.message}`, {
+                    autoClose: 2000,
+                    onClose: () => { },
+                });
+                router.back();
+            }
+            else {
+                alert(res.message);
+            }
             // const res = await companyReg(values);
         }
         catch (e) {
