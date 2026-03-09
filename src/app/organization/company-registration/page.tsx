@@ -250,7 +250,7 @@ const CompanyRegistration = () => {
         <div className="relative w-full h-full">
             <div className="fixed inset-0 -z-10">
                 <Image
-                    src="/assets/images/bg.png"
+                    src="/assets/images/background.png"
                     alt="Background"
                     fill
                     className="!object-cover !object-center"
@@ -261,7 +261,7 @@ const CompanyRegistration = () => {
             <OrgLayout showSidebar={false} transparentBg>
                 <div className='relative flex flex-col w-full h-full p-5'>
                     <div className='w-full flex flex-col h-screen items-center'>
-                        <h1 className="text-3xl font-bold text-center text-white mb-10">{id !== '' ? 'Update Organization' : 'Organization Registration'}</h1>
+                        <h1 className="text-3xl font-bold text-center text-black mb-10">{id !== '' ? 'Update Organization' : 'Organization Registration'}</h1>
                         <div className="w-full flex justify-center">
                             <Formik
                                 initialValues={regDetails}

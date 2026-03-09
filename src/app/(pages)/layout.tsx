@@ -55,7 +55,8 @@ export default function Layout({
                     <div className="sticky top-0 z-20 backdrop-blur-md">
                         <HeaderComponent showProfileSection={false} setSidebarOpen={setSidebarOpen} />
                     </div>
-                    <div className="rounded-xl bg-[#F5F2F2] p-1 shadow-md mb-4 mt-1 ">
+                    {/* <div className="rounded-xl bg-[#F5F2F2] p-1 shadow-md mb-4 mt-1 "> */}
+                    <div className="rounded-xl bg-[#F5F2F2] p-1 shadow-md mb-4 mt-1">
                         {children}
                     </div>
                 </main>

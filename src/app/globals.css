@@ -14,10 +14,10 @@
   src: url('/assets//fonts/Inter_18pt-Regular.ttf') format('truetype');
 }
 
-body {
-  /* font-family: 'Inria Serif'; */
-  font-family: 'Poppins', sans-serif;
-}
+  body {
+    /* font-family: 'Inria Serif'; */
+    font-family: 'Poppins', sans-serif;
+  }
 
 input::-ms-reveal,
 input::-ms-clear {

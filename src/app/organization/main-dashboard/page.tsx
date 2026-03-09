@@ -35,6 +35,7 @@ const MainDashboard = () => {
     try {
       setIsLoading(true)
       const res = await getAllCompanies(params as GetAllParams);
+      console.log("Get All Companies Response ==================> ", res.data)
       setIsLoading(false)
       console.log("Response ====> ", res)
       if (res.success) {
