@@ -1,4 +1,5 @@
-'use client'
+﻿'use client'
+import { Suspense } from 'react';
 import React, { useEffect, useState } from 'react'
 // import PersonalDetails from './component/personal_details';
 import Image from 'next/image'
@@ -51,9 +52,9 @@ const CompanyRegistration = () => {
         bankAddress: Yup.string().required('Bank Address is required'),
         password: Yup.string().required('Password is required'),
         logo: Yup.mixed()
-            .nullable() // ✅ allow null when editing
+            .nullable() // âœ… allow null when editing
             .when([], {
-                is: () => id === '', // ✅ use outer id variable directly
+                is: () => id === '', // âœ… use outer id variable directly
                 then: (schema) =>
                     schema
                         .required('Please Upload Logo')
@@ -111,7 +112,7 @@ const CompanyRegistration = () => {
             let res = await companyReg(values.logo, req);
             setIsLoading(false);
             if (res.success) {
-                toast.success(`🎉 ${res.message}`, {
+                toast.success(`ðŸŽ‰ ${res.message}`, {
                     autoClose: 2000,
                     onClose: () => { },
                 });
@@ -172,7 +173,7 @@ const CompanyRegistration = () => {
             let res = await companyUpdate(values.logo ?? null, req, id);
             setIsLoading(false);
             if (res.success) {
-                toast.success(`🎉 ${res.message}`, {
+                toast.success(`ðŸŽ‰ ${res.message}`, {
                     autoClose: 2000,
                     onClose: () => { },
                 });
@@ -354,5 +355,10 @@ const CompanyRegistration = () => {
         // </div>
     )
 }
-
-export default CompanyRegistration
+export default function CompanyRegistrationPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <CompanyRegistration />
+    </Suspense>
+  );
+}

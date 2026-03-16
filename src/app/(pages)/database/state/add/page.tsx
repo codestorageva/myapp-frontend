@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import { addState, AddStateParams, getStateById, updateState } from '@/app/(pages)/common/state_dropdown/state_controller';
 import CustomLabel from '@/app/component/label';
 import Layout from '@/app/component/layout';
@@ -6,7 +6,7 @@ import Loader from '@/app/component/Loader/page';
 import { ErrorMessage, Field, Formik } from 'formik';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, Suspense } from 'react'
 import { Form } from 'formik';
 import { toast } from 'react-toastify';
 import * as Yup from "yup";
@@ -33,7 +33,7 @@ const AddState = () => {
             let response = await addState(values);
             setIsLoading(false);
             if (response.success) {
-                toast.success(`🎉 ${response.message}`, {
+                toast.success(`ðŸŽ‰ ${response.message}`, {
                     autoClose: 2000,
                     onClose: () => { },
                 });
@@ -43,13 +43,13 @@ const AddState = () => {
                 resetForm();
             }
             else {
-                toast.error(`🤔 ${response.message}`, {
+                toast.error(`ðŸ¤” ${response.message}`, {
                     autoClose: 2000,
                 });
             }
         }
         catch {
-            toast.error(`🤔 Something went wrong. Please try again!`, {
+            toast.error(`ðŸ¤” Something went wrong. Please try again!`, {
                 autoClose: 2000,
             });
         }
@@ -67,7 +67,7 @@ const AddState = () => {
         try {
             let response = await updateState(values, id);
             if (response.success) {
-                toast.success(`🎉 ${response.message}`, {
+                toast.success(`ðŸŽ‰ ${response.message}`, {
                     autoClose: 2000,
                     onClose: () => { },
                 });
@@ -76,13 +76,13 @@ const AddState = () => {
 
             }
             else {
-                toast.error(`🤔 ${response.message}`, {
+                toast.error(`ðŸ¤” ${response.message}`, {
                     autoClose: 2000,
                 });
             }
         }
         catch {
-            toast.error(`🤔 Something went wrong. Please try again!`, {
+            toast.error(`ðŸ¤” Something went wrong. Please try again!`, {
                 autoClose: 2000,
             });
         }
@@ -167,5 +167,10 @@ const AddState = () => {
 
     )
 }
-
-export default AddState
+export default function AddStatePage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <AddState />
+    </Suspense>
+  );
+}

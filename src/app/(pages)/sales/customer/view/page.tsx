@@ -1,7 +1,7 @@
-'use client';
+﻿'use client';
 import Layout from '@/app/component/layout';
 import { useSearchParams } from 'next/navigation';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, Suspense } from 'react'
 import { CustomerData, getCustomerById } from '../customer';
 import Loader from '@/app/component/Loader/page';
 import TextField from '@/app/component/inputfield';
@@ -145,7 +145,7 @@ const CustomerView = () => {
         {
           customerData?.invoices !== null && customerData?.invoices.map((data, index) => (
             <div className='text-sm' key={index}>
-              Invoice <a href={`${ROUTES.view_invoice}?id=${data.invoiceId}`} className='text-sm cursor-pointer text-blue-600'>{data.invoicePrefix + ' ' + data?.invoiceNumber}</a> of amount ₹ {data.grandTotal.toLocaleString('en-In', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} created
+              Invoice <a href={`${ROUTES.view_invoice}?id=${data.invoiceId}`} className='text-sm cursor-pointer text-blue-600'>{data.invoicePrefix + ' ' + data?.invoiceNumber}</a> of amount â‚¹ {data.grandTotal.toLocaleString('en-In', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} created
             </div>
           ))
         }
@@ -153,5 +153,10 @@ const CustomerView = () => {
     </div>
   )
 }
-
-export default CustomerView
+export default function CustomerViewPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <CustomerView />
+    </Suspense>
+  );
+}

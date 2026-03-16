@@ -1,4 +1,5 @@
-'use client'
+﻿'use client'
+import { Suspense } from 'react';
 import CityDropDown from '@/app/(pages)/common/city_dropdown/page';
 import StateDropDown from '@/app/(pages)/common/state_dropdown/page';
 import { ContactPersons } from '@/app/(pages)/customer/customer';
@@ -72,7 +73,7 @@ const VendorAdd = () => {
 
                 setVendorDetails(updatedDetails);
 
-                // ✅ Now log immediately from updated object
+                // âœ… Now log immediately from updated object
                 console.log("Company ID (updated) :", updatedDetails.companyId);
             } else {
 
@@ -270,7 +271,7 @@ const VendorAdd = () => {
                                                         />
                                                     </td>
                                                     <td className="text-center">
-                                                        <button onClick={() => removeContact(index)} className="text-red-500 text-sm hover:underline">✖</button>
+                                                        <button onClick={() => removeContact(index)} className="text-red-500 text-sm hover:underline">âœ–</button>
                                                     </td>
                                                 </tr>
                                             ))}
@@ -728,7 +729,7 @@ const VendorAdd = () => {
                                         autoComplete="off"
                                         value={values.notes}
                                         onChange={handleChange}
-                                        rows={4} // ← controls visible height
+                                        rows={4} // â† controls visible height
                                         placeholder="Enter notes..."
                                         className="block w-full font-inter rounded-md border focus:outline-none border-gray-300 py-1 px-2 text-gray-900 bg-white focus:ring-1 focus:ring-red-300 focus:border-[2px] placeholder:text-gray-400 sm:text-sm sm:leading-6"
                                     />
@@ -758,5 +759,10 @@ const VendorAdd = () => {
         </div>
     )
 }
-
-export default VendorAdd
+export default function VendorAddPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <VendorAdd />
+    </Suspense>
+  );
+}

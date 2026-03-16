@@ -1,4 +1,5 @@
-'use client'
+﻿'use client'
+import { Suspense } from 'react';
 import Layout from '@/app/component/layout'
 import React, { useEffect, useState } from 'react'
 import { getCompanyById } from './dashboard';
@@ -930,11 +931,11 @@ const DashboardScreen = () => {
 
                                             <div className="flex flex-col items-end justify-end">
                                                 <span className="text-green-600 font-medium">Total Sales</span>
-                                                <span className="text-black text-xl">₹{totalReceipts.toLocaleString()}</span>
+                                                <span className="text-black text-xl">â‚¹{totalReceipts.toLocaleString()}</span>
                                             </div>
                                             <div className="flex flex-col items-end justify-end">
                                                 <span className="text-red-600 font-medium">Total Purchase</span>
-                                                <span className="text-black text-xl">₹{totalExpenses.toLocaleString()}</span>
+                                                <span className="text-black text-xl">â‚¹{totalExpenses.toLocaleString()}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -1000,11 +1001,11 @@ const DashboardScreen = () => {
                                         <div className="flex flex-col md:flex-row lg:flex-col gap-5 w-full">
                                             <div className="flex flex-col items-end justify-end w-full">
                                                 <span className="text-green-600 font-medium">Total Sales</span>
-                                                <span className="text-black text-xl">₹{totalReceipts.toLocaleString()}</span>
+                                                <span className="text-black text-xl">â‚¹{totalReceipts.toLocaleString()}</span>
                                             </div>
                                             <div className="flex flex-col items-end justify-end w-full">
                                                 <span className="text-red-600 font-medium">Total Purchase</span>
-                                                <span className="text-black text-xl">₹{totalExpenses.toLocaleString()}</span>
+                                                <span className="text-black text-xl">â‚¹{totalExpenses.toLocaleString()}</span>
                                             </div>
                                         </div>
                                     </div> */}
@@ -1014,11 +1015,11 @@ const DashboardScreen = () => {
                                         <div className="flex flex-col gap-5 [@media(width:768px)]:flex-row [@media(width:425px)]:flex-row  [@media(width:375px)]:flex-row ">
                                             <div className="flex flex-col items-end justify-end">
                                                 <span className="text-green-600 font-medium ">Total Sales</span>
-                                                <span className="text-black text-xl">₹{totalReceipts.toLocaleString()}</span>
+                                                <span className="text-black text-xl">â‚¹{totalReceipts.toLocaleString()}</span>
                                             </div>
                                             <div className="flex flex-col items-end justify-end">
                                                 <span className="text-red-600 font-medium">Total Purchase</span>
-                                                <span className="text-black text-xl">₹{totalExpenses.toLocaleString()}</span>
+                                                <span className="text-black text-xl">â‚¹{totalExpenses.toLocaleString()}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -1035,4 +1036,11 @@ const DashboardScreen = () => {
     );
 };
 
-export default DashboardScreen;
+;
+export default function DashboardScreenPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <DashboardScreen />
+    </Suspense>
+  );
+}

@@ -1,4 +1,5 @@
-'use client'
+﻿'use client'
+import { Suspense } from 'react';
 import Colors from '@/app/utils/colors';
 import { useSearchParams } from 'next/navigation'
 import React, { useRef } from 'react'
@@ -84,7 +85,7 @@ const ViewBill = () => {
                             <div className='col-span-1 p-3 space-y-2'>
                                 <div className='px-2 flex justify-between text-sm text-gray-800'>
                                     <div>Sub Total </div>
-                                    <div>₹ {('50000.00')}</div>
+                                    <div>â‚¹ {('50000.00')}</div>
                                 </div>
                                 <div className='px-2 flex justify-between text-sm text-gray-800'>
                                     <div>Amount Withheld </div>
@@ -92,7 +93,7 @@ const ViewBill = () => {
                                 </div>
                                 <div className='px-2 flex justify-between text-sm text-gray-800'>
                                     <div>Total</div>
-                                    <div>₹ 49800.00</div>
+                                    <div>â‚¹ 49800.00</div>
                                 </div>
                                 <div className='px-2 flex justify-between text-sm text-gray-800'>
                                     <div>Payment Made</div>
@@ -101,7 +102,7 @@ const ViewBill = () => {
                                 {/* <div className='px-2 flex justify-between text-sm py-2 bg-gray-100 text-gray-800'>
                                     <div>Balance Due</div>
                                     <div>
-                                        ₹ 50000.00
+                                        â‚¹ 50000.00
                                     </div>
                                 </div> */}
                             </div>
@@ -113,8 +114,8 @@ const ViewBill = () => {
                                     <div className="col-span-1 border-r  px-3 overflow-x-auto">
                                         <div className="flex justify-between text-sm px-2 py-1">
                                             <div className='font-bold'>Balance Due</div>
-                                            {/* <div>{Math.round(finalTotal - 0.5) === finalTotal ? '₹ 0.00' : (finalTotal - Math.round(finalTotal)).toFixed(2)}</div> */}
-                                            <div className='font-bold'>₹ 47800.00</div>
+                                            {/* <div>{Math.round(finalTotal - 0.5) === finalTotal ? 'â‚¹ 0.00' : (finalTotal - Math.round(finalTotal)).toFixed(2)}</div> */}
+                                            <div className='font-bold'>â‚¹ 47800.00</div>
                                         </div>
                                     </div>
                                 </div>
@@ -134,5 +135,10 @@ const ViewBill = () => {
         </div>
     )
 }
-
-export default ViewBill
+export default function ViewBillPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ViewBill />
+    </Suspense>
+  );
+}

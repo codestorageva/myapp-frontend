@@ -1,4 +1,5 @@
-'use client'
+﻿'use client'
+import { Suspense } from 'react';
 import { InvoiceDetails } from '@/app/types/invoice'
 import React, { FC, useEffect, useRef, useState } from 'react'
 import html2canvas from 'html2canvas';
@@ -93,7 +94,7 @@ const PreviewInvoice: FC<any> = ({ invoiceData }) => {
 
     const handleDownloadPDF = async () => {
         const element = invoiceRef.current;
-        if (!element) return; // ✅ null check
+        if (!element) return; // âœ… null check
 
         await new Promise((resolve) => setTimeout(resolve, 500));
 
@@ -158,7 +159,7 @@ const PreviewInvoice: FC<any> = ({ invoiceData }) => {
                 setIsOutOfGujarat(isOutOfGT);
             }
             else {
-                toast.error(`🤔 Failed to get invoice details`, { autoClose: 2000 });
+                toast.error(`ðŸ¤” Failed to get invoice details`, { autoClose: 2000 });
             }
         }
         catch { }
@@ -177,7 +178,7 @@ const PreviewInvoice: FC<any> = ({ invoiceData }) => {
             if (response.success) {
                 setCompanyData(response.data)
             } else {
-                toast.error(`🤔 Data Not Found`, { autoClose: 2000 });
+                toast.error(`ðŸ¤” Data Not Found`, { autoClose: 2000 });
             }
         }
         catch {
@@ -462,7 +463,7 @@ const PreviewInvoice: FC<any> = ({ invoiceData }) => {
         //         </div>
         //         <div className="flex justify-between items-center px-5 py-3">
         //             <div className="font-semibold">
-        //                 Receiver’s Signature :- <span className="border-b border-black inline-block w-48 ml-2" />
+        //                 Receiverâ€™s Signature :- <span className="border-b border-black inline-block w-48 ml-2" />
         //             </div>
         //             <div className="italic">(Authorised Signatory)</div>
         //         </div>
@@ -630,7 +631,7 @@ const PreviewInvoice: FC<any> = ({ invoiceData }) => {
                                     <div className="col-span-1 border-r  overflow-x-auto">
                                         <div className="flex justify-between text-sm px-3 py-1">
                                             <div className='font-bold'>Sub Total</div>
-                                            {/* <div>{Math.round(finalTotal - 0.5) === finalTotal ? '₹ 0.00' : (finalTotal - Math.round(finalTotal)).toFixed(2)}</div> */}
+                                            {/* <div>{Math.round(finalTotal - 0.5) === finalTotal ? 'â‚¹ 0.00' : (finalTotal - Math.round(finalTotal)).toFixed(2)}</div> */}
                                             <div className='font-bold'>{data?.totalTaxableAmount.toLocaleString('en-In', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
                                         </div>
                                     </div>
@@ -677,7 +678,7 @@ const PreviewInvoice: FC<any> = ({ invoiceData }) => {
                                     <div className="col-span-1 border border-gray-300 p-3  overflow-x-auto">
                                         <div className="flex justify-between text-sm text-gray-800">
                                             <h4 className="text-sm font-semibold mb-2 text-gray-700">Taxable Amount:</h4>
-                                            {/* <div>₹ {Object.values(gstGroupedTotals).reduce((sum, data) => sum + data.taxableAmount, 0).toFixed(2)}</div> */}
+                                            {/* <div>â‚¹ {Object.values(gstGroupedTotals).reduce((sum, data) => sum + data.taxableAmount, 0).toFixed(2)}</div> */}
                                             <div>
                                                 {data?.totalTaxableAmount.toLocaleString('en-In', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                                             </div>
@@ -700,7 +701,7 @@ const PreviewInvoice: FC<any> = ({ invoiceData }) => {
 
                                         <div className="flex justify-between text-sm text-gray-800 mt-2">
                                             <div>Round Off</div>
-                                            {/* <div>{Math.round(finalTotal - 0.5) === finalTotal ? '₹ 0.00' : (finalTotal - Math.round(finalTotal)).toFixed(2)}</div> */}
+                                            {/* <div>{Math.round(finalTotal - 0.5) === finalTotal ? 'â‚¹ 0.00' : (finalTotal - Math.round(finalTotal)).toFixed(2)}</div> */}
                                             <div>{data?.roundOff.toFixed(2)}</div>
                                         </div>
                                         {
@@ -727,7 +728,7 @@ const PreviewInvoice: FC<any> = ({ invoiceData }) => {
                                     <div className="border border-gray-300 col-span-1 py-1 px-3  overflow-x-auto">
                                         <div className="flex justify-between text-sm text-gray-800">
                                             <div className='font-bold'>Grand Total</div>
-                                            {/* <div>{Math.round(finalTotal - 0.5) === finalTotal ? '₹ 0.00' : (finalTotal - Math.round(finalTotal)).toFixed(2)}</div> */}
+                                            {/* <div>{Math.round(finalTotal - 0.5) === finalTotal ? 'â‚¹ 0.00' : (finalTotal - Math.round(finalTotal)).toFixed(2)}</div> */}
                                             <div className='font-bold'>{data?.grandTotal.toLocaleString('en-In', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
                                         </div>
                                     </div>
@@ -775,5 +776,10 @@ const PreviewInvoice: FC<any> = ({ invoiceData }) => {
         </div>
     )
 }
-
-export default PreviewInvoice
+export default function PreviewInvoicePage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <PreviewInvoice />
+    </Suspense>
+  );
+}

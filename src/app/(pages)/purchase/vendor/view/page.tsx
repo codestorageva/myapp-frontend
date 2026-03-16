@@ -1,4 +1,5 @@
-'use client'
+﻿'use client'
+import { Suspense } from 'react';
 import { CustomerData } from '@/app/(pages)/customer/customer';
 import Loader from '@/app/component/Loader/page';
 import ViewCard from '@/app/component/view_card';
@@ -278,8 +279,8 @@ const VendorView = () => {
                                                         bill: "1275",
                                                         order: "1121",
                                                         vendor: "abc",
-                                                        amount: "₹1,600.00",
-                                                        balance: "₹1,600.00",
+                                                        amount: "â‚¹1,600.00",
+                                                        balance: "â‚¹1,600.00",
                                                         status: "Open",
                                                     },
                                                     {
@@ -287,8 +288,8 @@ const VendorView = () => {
                                                         bill: "123456",
                                                         order: "111",
                                                         vendor: "abc",
-                                                        amount: "₹98.00",
-                                                        balance: "₹0.00",
+                                                        amount: "â‚¹98.00",
+                                                        balance: "â‚¹0.00",
                                                         status: "Paid",
                                                     },
                                                 ].map((item, index) => (
@@ -334,5 +335,10 @@ const VendorView = () => {
         </div>
     )
 }
-
-export default VendorView
+export default function VendorViewPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <VendorView />
+    </Suspense>
+  );
+}

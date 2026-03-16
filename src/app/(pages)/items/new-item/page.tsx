@@ -1,5 +1,5 @@
-'use client';
-import { FC, useEffect, useState } from 'react';
+﻿'use client';
+import { FC, useEffect, useState, Suspense } from 'react';
 import CustomLabel from '@/app/component/label';
 import Layout from '@/app/component/layout';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
@@ -60,7 +60,7 @@ const AddNewItem: FC<any> = ({ isModalOpen = false, onClick }) => {
       console.log("request data ", request)
       const res = await addNewItem(request);
       if (res?.success) {
-        toast.success(`🎉 ${res.message}`, {
+        toast.success(`ðŸŽ‰ ${res.message}`, {
           autoClose: 2000,
           onClose: () => { },
         });
@@ -74,7 +74,7 @@ const AddNewItem: FC<any> = ({ isModalOpen = false, onClick }) => {
         }
 
       } else {
-        toast.error(`🤔 ${res.message}`, {
+        toast.error(`ðŸ¤” ${res.message}`, {
           autoClose: 2000,
         });
       }
@@ -103,7 +103,7 @@ const AddNewItem: FC<any> = ({ isModalOpen = false, onClick }) => {
       };
       const res = await updateNewItem(id, request);
       if (res.success) {
-        toast.success(`🎉 ${res.message}`, {
+        toast.success(`ðŸŽ‰ ${res.message}`, {
           autoClose: 2000,
           onClose: () => { },
         });
@@ -118,7 +118,7 @@ const AddNewItem: FC<any> = ({ isModalOpen = false, onClick }) => {
 
       }
       else {
-        toast.error(`🤔 ${res.message}`, {
+        toast.error(`ðŸ¤” ${res.message}`, {
           autoClose: 2000,
         });
       }
@@ -143,7 +143,7 @@ const AddNewItem: FC<any> = ({ isModalOpen = false, onClick }) => {
         setItemType(res.data.type)
         setValues({ ...initialValues, name: res.data.productName ?? '', hsnCode: res.data.type.toLowerCase() === 'Goods'.toLowerCase() ? (res.data.hsnCode ?? '') : (res.data.sacCode ?? ''), taxPref: res.data.taxPreference, unit: res.data.unit, taxPer: res.data.gstPercent?.toString() ?? '', sellingPrice: res.data.sellingPrice.toString() })
       } else {
-        toast.error(`🤔 ${'Something went wrong. Please try again!'}`, {
+        toast.error(`ðŸ¤” ${'Something went wrong. Please try again!'}`, {
           autoClose: 2000,
         });
       }
@@ -339,4 +339,11 @@ const AddNewItem: FC<any> = ({ isModalOpen = false, onClick }) => {
   );
 };
 
-export default AddNewItem;
+;
+export default function AddNewItemPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <AddNewItem />
+    </Suspense>
+  );
+}

@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import { addCity, AddCityParams, getCityById, updateSCity } from '@/app/(pages)/common/city_dropdown/city_controller';
 import StateDropDown from '@/app/(pages)/common/state_dropdown/page';
 import TextField from '@/app/component/inputfield';
@@ -8,7 +8,7 @@ import Loader from '@/app/component/Loader/page';
 import { ErrorMessage, Form, Formik } from 'formik';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react'
+import { Suspense, useState, useEffect } from "react";
 import { toast } from 'react-toastify';
 import * as Yup from "yup";
 
@@ -61,7 +61,7 @@ const CityAddUpdate = () => {
             let response = await addCity(values);
             setIsLoading(false);
             if (response.success) {
-                toast.success(`🎉 ${response.message}`, {
+                toast.success(`ðŸŽ‰ ${response.message}`, {
                     autoClose: 2000,
                     onClose: () => { },
                 });
@@ -71,13 +71,13 @@ const CityAddUpdate = () => {
                 resetForm();
             }
             else {
-                toast.error(`🤔 ${response.message}`, {
+                toast.error(`ðŸ¤” ${response.message}`, {
                     autoClose: 2000,
                 });
             }
         }
         catch {
-            toast.error(`🤔 Something went wrong. Please try again!`, {
+            toast.error(`ðŸ¤” Something went wrong. Please try again!`, {
                 autoClose: 2000,
             });
         }
@@ -91,7 +91,7 @@ const CityAddUpdate = () => {
         try {
             let response = await updateSCity(values, id);
             if (response.success) {
-                toast.success(`🎉 ${response.message}`, {
+                toast.success(`ðŸŽ‰ ${response.message}`, {
                     autoClose: 2000,
                     onClose: () => { },
                 });
@@ -100,13 +100,13 @@ const CityAddUpdate = () => {
 
             }
             else {
-                toast.error(`🤔 ${response.message}`, {
+                toast.error(`ðŸ¤” ${response.message}`, {
                     autoClose: 2000,
                 });
             }
         }
         catch {
-            toast.error(`🤔 Something went wrong. Please try again!`, {
+            toast.error(`ðŸ¤” Something went wrong. Please try again!`, {
                 autoClose: 2000,
             });
         }
@@ -188,5 +188,10 @@ const CityAddUpdate = () => {
         </div>
     )
 }
-
-export default CityAddUpdate
+export default function CityAddUpdatePage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <CityAddUpdate />
+    </Suspense>
+  );
+}

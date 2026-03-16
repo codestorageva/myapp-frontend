@@ -1,4 +1,5 @@
-'use client'
+﻿'use client'
+import { Suspense } from 'react';
 import TextField from '@/app/component/inputfield'
 import CustomLabel from '@/app/component/label'
 import Layout from '@/app/component/layout'
@@ -210,7 +211,7 @@ const Customer = () => {
 
         setRegDetails(updatedDetails);
 
-        // ✅ Now log immediately from updated object
+        // âœ… Now log immediately from updated object
         console.log("Company ID (updated) :", updatedDetails.companyId);
       } else {
 
@@ -257,7 +258,7 @@ const Customer = () => {
   //     let response = await addNewCustomer(request);
   //     setIsLoading(false);
   //     if (response.success) {
-  //         toast.success(`🎉 ${response.message}`, {
+  //         toast.success(`ðŸŽ‰ ${response.message}`, {
   //             autoClose: 2000,
   //             onClose: () => { },
   //         });
@@ -267,13 +268,13 @@ const Customer = () => {
   //         resetForm();
   //     }
   //     else {
-  //         toast.error(`🤔 ${response.message}`, {
+  //         toast.error(`ðŸ¤” ${response.message}`, {
   //             autoClose: 2000,
   //         });
   //     }
   //   }
   //   catch {
-  //     toast.error(`🤔 Something went wrong. Please try again!`, {
+  //     toast.error(`ðŸ¤” Something went wrong. Please try again!`, {
   //       autoClose: 2000,
   //     });
   //   }
@@ -302,7 +303,7 @@ const Customer = () => {
         displayName: values.displayName,
         email: values.email,
         firstName: values.firstName,
-        lastName: values.lastName, // ✅ fixed typo
+        lastName: values.lastName, // âœ… fixed typo
         mobileNumber: values.mobileNo,
         pan: values.pan,
         gstNumber: values.gstNo,
@@ -323,15 +324,15 @@ const Customer = () => {
       const response = await addNewCustomer(request);
 
       if (response.success) {
-        toast.success(`🎉 ${response.message}`, { autoClose: 2000 });
+        toast.success(`ðŸŽ‰ ${response.message}`, { autoClose: 2000 });
         router.back();
         resetForm();
       } else {
-        toast.error(`🤔 ${response.message}`, { autoClose: 2000 });
+        toast.error(`ðŸ¤” ${response.message}`, { autoClose: 2000 });
       }
     } catch (error: any) {
       console.error("Submit Error:", error);
-      toast.error(`🤔 Something went wrong. Please try again!`, { autoClose: 2000 });
+      toast.error(`ðŸ¤” Something went wrong. Please try again!`, { autoClose: 2000 });
     } finally {
       setIsLoading(false);
     }
@@ -358,7 +359,7 @@ const Customer = () => {
         displayName: values.displayName,
         email: values.email,
         firstName: values.firstName,
-        lastName: values.lastName, // ✅ fixed typo
+        lastName: values.lastName, // âœ… fixed typo
         mobileNumber: values.mobileNo,
         pan: values.pan,
         gstNumber: values.gstNo,
@@ -379,15 +380,15 @@ const Customer = () => {
       const response = await updateCustomer(request, id);
 
       if (response.success) {
-        toast.success(`🎉 ${response.message}`, { autoClose: 2000 });
+        toast.success(`ðŸŽ‰ ${response.message}`, { autoClose: 2000 });
         router.back();
         resetForm();
       } else {
-        toast.error(`🤔 ${response.message}`, { autoClose: 2000 });
+        toast.error(`ðŸ¤” ${response.message}`, { autoClose: 2000 });
       }
     } catch (error: any) {
       console.error("Submit Error:", error);
-      toast.error(`🤔 Something went wrong. Please try again!`, { autoClose: 2000 });
+      toast.error(`ðŸ¤” Something went wrong. Please try again!`, { autoClose: 2000 });
     } finally {
       setIsLoading(false);
     }
@@ -581,7 +582,7 @@ const Customer = () => {
                               />
                             </td>
                             <td className="text-center">
-                              <button onClick={() => removeContact(index)} className="text-red-500 text-sm hover:underline">✖</button>
+                              <button onClick={() => removeContact(index)} className="text-red-500 text-sm hover:underline">âœ–</button>
                             </td>
                           </tr>
                         ))}
@@ -814,5 +815,10 @@ const Customer = () => {
    
   )
 }
-
-export default Customer
+export default function CustomerPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <Customer />
+    </Suspense>
+  );
+}
